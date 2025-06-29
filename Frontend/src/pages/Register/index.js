@@ -25,7 +25,7 @@ const Register = () => {
         password,
       });
 
-      navigate("/login"); // Redireciona para login após cadastro
+      navigate("/login");
     } catch (err) {
       console.error("Erro ao cadastrar:", err);
       setError("Houve um problema ao cadastrar. Tente novamente.");

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Title, Form } from "./style";
 import api from "../../services/api";
-import { login } from "../../services/auth"; // Função que salva o token no localStorage
+import { login } from "../../services/auth";
 
 const Login = () => {
-  const [name, setName] = useState(""); // Campo de login via nome
-  const [password, setPassword] = useState(""); // Campo da senha
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const Login = () => {
       const response = await api.post("/users/login", { name, password });
 
       const token = response.data.accessToken;
-      login(token); // Salva o token (ex: localStorage.setItem('token', token))
-      navigate("/app"); // Redireciona após login bem-sucedido
+      login(token);
+      navigate("/app");
     } catch (err) {
       setError("Houve um problema com o login. Verifique suas credenciais!");
     }

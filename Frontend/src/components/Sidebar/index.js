@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login"); // redireciona após logout
+    navigate("/login");
   };
 
   return (
@@ -77,7 +77,7 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
-                {/* Logout aqui é um botão que chama função para deslogar e navegar */}
+                {}
                 <button
                   onClick={handleLogout}
                   style={{

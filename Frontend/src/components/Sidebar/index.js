@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SidebarContainer, ToggleButton, NavMenu } from "./style";
-import { isAuthenticated } from "../../services/auth";
+import { isAuthenticated, logout } from "../../services/auth";
 import {
   AiOutlineHome,
   AiOutlineLogin,
@@ -11,17 +11,27 @@ import {
   AiOutlineShoppingCart,
   AiOutlineOrderedList,
 } from "react-icons/ai";
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+
   const isActive = (path) => location.pathname === path;
   const authenticated = isAuthenticated();
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // redireciona após logout
   };
+
   return (
     <SidebarContainer isOpen={isOpen}>
-      <ToggleButton onClick={toggleSidebar}>{isOpen ? "←" : "→"}</ToggleButton>
+      <ToggleButton onClick={toggleSidebar}>
+        {isOpen ? "←" : "→"}
+      </ToggleButton>
       <NavMenu isOpen={isOpen}>
         <ul>
           <li className={isActive("/") ? "active" : ""}>
@@ -30,6 +40,7 @@ const Sidebar = () => {
               {isOpen && <span>Home</span>}
             </Link>
           </li>
+
           {!authenticated ? (
             <>
               <li className={isActive("/login") ? "active" : ""}>
@@ -65,11 +76,24 @@ const Sidebar = () => {
                   {isOpen && <span>Pedidos</span>}
                 </Link>
               </li>
-              <li className={isActive("/logout") ? "active" : ""}>
-                <Link to="/logout">
+              <li>
+                {/* Logout aqui é um botão que chama função para deslogar e navegar */}
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "inherit",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "1rem",
+                    padding: 0,
+                  }}
+                >
                   <AiOutlineLogout size={20} />
                   {isOpen && <span>Logout</span>}
-                </Link>
+                </button>
               </li>
             </>
           )}
@@ -78,4 +102,5 @@ const Sidebar = () => {
     </SidebarContainer>
   );
 };
+
 export default Sidebar;

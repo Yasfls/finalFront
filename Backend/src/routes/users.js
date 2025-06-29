@@ -1,5 +1,6 @@
 import express from 'express';
 import userController from '../controllers/userController.js';
+import { authenticateToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -52,7 +53,7 @@ router.post('/addUser', userController.addUser);
  *       500:
  *         description: Erro ao buscar usuários
  */
-router.get('/AllUsers', userController.getAllUsers);
+router.get('/AllUsers', authenticateToken, userController.getAllUsers);
 
 /**
  * @swagger
@@ -75,7 +76,7 @@ router.get('/AllUsers', userController.getAllUsers);
  *       500:
  *         description: Erro ao buscar usuário
  */
-router.get('/:id', userController.getSingleUser);
+router.get('/:id', authenticateToken, userController.getSingleUser);
 
 /**
  * @swagger
@@ -114,7 +115,7 @@ router.get('/:id', userController.getSingleUser);
  *       500:
  *         description: Erro ao atualizar usuário
  */
-router.put('/:id', userController.updateUser);
+router.put('/:id', authenticateToken, userController.updateUser);
 
 /**
  * @swagger
@@ -137,7 +138,7 @@ router.put('/:id', userController.updateUser);
  *       500:
  *         description: Erro ao deletar usuário
  */
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', authenticateToken, userController.deleteUser);
 
 /**
  * @swagger

@@ -1,5 +1,6 @@
 import express from "express";
 import productController from "../controllers/productController.js";
+import { authenticateToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ const router = express.Router();
  *       500:
  *         description: Erro ao buscar produtos.
  */
-router.get("/AllProducts", productController.getAllProducts);
+router.get("/AllProducts", authenticateToken, productController.getAllProducts);
 
 /**
  * @swagger
@@ -53,7 +54,7 @@ router.get("/AllProducts", productController.getAllProducts);
  *       500:
  *         description: Erro ao criar produto
  */
-router.post("/addProduct", productController.addProduct);
+router.post("/addProduct", authenticateToken, productController.addProduct);
 
 /**
  * @swagger
@@ -74,7 +75,7 @@ router.post("/addProduct", productController.addProduct);
  *      500:
  *        description: Erro ao buscar produto
  */
-router.get("/:id", productController.getSingleProduct);
+router.get("/:id", authenticateToken, productController.getSingleProduct);
 
 /**
  * @swagger
@@ -108,7 +109,7 @@ router.get("/:id", productController.getSingleProduct);
  *       500:
  *         description: Erro ao atualizar produto
  */
-router.put("/:id", productController.updateProduct);
+router.put("/:id", authenticateToken, productController.updateProduct);
 
 /**
  * @swagger
@@ -129,6 +130,6 @@ router.put("/:id", productController.updateProduct);
  *       500:
  *         description: Erro ao deletar produto
  */
-router.delete("/:id", productController.deleteProduct);
+router.delete("/:id", authenticateToken, productController.deleteProduct);
 
 export default router;

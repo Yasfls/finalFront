@@ -1,5 +1,6 @@
 import express from 'express';
 import categoryController from '../controllers/categoryController.js';
+import { authenticateToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ const router = express.Router();
  *       500:
  *         description: Erro ao criar categoria
  */
-router.post('/addCategory', categoryController.addCategory);
+router.post('/addCategory', authenticateToken, categoryController.addCategory);
 
 /**
  * @swagger
@@ -46,7 +47,7 @@ router.post('/addCategory', categoryController.addCategory);
  *       500:
  *         description: Erro ao buscar categorias
  */
-router.get('/AllCategories', categoryController.getAllCategories);
+router.get('/AllCategories', authenticateToken, categoryController.getAllCategories);
 
 /**
  * @swagger
@@ -67,7 +68,7 @@ router.get('/AllCategories', categoryController.getAllCategories);
  *       404:
  *         description: Categoria não encontrada
  */
-router.get('/:id', categoryController.getSingleCategory);
+router.get('/:id', authenticateToken, categoryController.getSingleCategory);
 
 /**
  * @swagger
@@ -98,7 +99,7 @@ router.get('/:id', categoryController.getSingleCategory);
  *       404:
  *         description: Categoria não encontrada
  */
-router.put('/:id', categoryController.updateCategory);
+router.put('/:id', authenticateToken, categoryController.updateCategory);
 
 /**
  * @swagger
@@ -119,7 +120,7 @@ router.put('/:id', categoryController.updateCategory);
  *       404:
  *         description: Categoria não encontrada
  */
-router.delete('/:id', categoryController.deleteCategory);
+router.delete('/:id', authenticateToken, categoryController.deleteCategory);
 
 /**
  * @swagger
@@ -140,6 +141,6 @@ router.delete('/:id', categoryController.deleteCategory);
  *       404:
  *         description: Categoria não encontrada
  */
-router.get('/getProductsbyCategory/:id', categoryController.getProductsbyCategory);
+router.get('/getProductsbyCategory/:id', authenticateToken, categoryController.getProductsbyCategory);
 
 export default router;

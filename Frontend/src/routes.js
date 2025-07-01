@@ -7,36 +7,44 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
 import Products from './pages/Products';
+import Categories from './pages/Categories'; // <-- IMPORTANTE: Importar o novo componente
 import App from './pages/App';
 import Sidebar from "./components/Sidebar";
-import { isAuthenticated } from "./services/auth"; //Adicione a linha
+import { isAuthenticated } from "./services/auth";
+
 const MainPage = () => <Main />
 const LoginPage = () => <Login />
 const LogoutPage = () => <Logout />
 const NotFoundPage = () => <NotFound />
 const RegisterPage = () => <Register />
 const ProductsPage = () => <Products />
-const OrdersPage = () => <Orders /> //Adicione esta linha
-const AppPage = () => { //Altere aqui
-if (!isAuthenticated()){
-return <Navigate to="/" replace />;
-}
-return <App />;
-}
-const Rotas = () => (
-<Router>
-<Sidebar />
-<Routes>
-<Route path='/' element={<MainPage />} />
-<Route path='/login' element={<LoginPage />} />
-<Route path='/logout' element={<LogoutPage />} />
-<Route path='/app' element={<AppPage />} />
-<Route path='/register' element={<RegisterPage />} />
-<Route path='/orders' element={<OrdersPage />} />
-<Route path='/products' element={<ProductsPage />} />
-<Route path='*' element={<NotFoundPage />} />
-</Routes>
-</Router> 
-);
-export default Rotas;
+const OrdersPage = () => <Orders />
+const CategoriesPage = () => <Categories /> // <-- NOVO: Definir o componente da rota
 
+const AppPage = () => {
+    if (!isAuthenticated()){
+        return <Navigate to="/" replace />;
+    }
+    return <App />;
+}
+
+const Rotas = () => (
+    <Router>
+        <Sidebar /> {/* Sidebar é renderizado em todas as rotas */}
+        <div style={{ marginLeft: '60px' }}> {/* Adicionado um margin-left simples para não sobrepor a sidebar */}
+            <Routes>
+                <Route path='/' element={<MainPage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/logout' element={<LogoutPage />} />
+                <Route path='/app' element={<AppPage />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/products' element={<ProductsPage />} />
+                <Route path='/orders' element={<OrdersPage />} />
+                <Route path='/categories' element={<CategoriesPage />} /> {/* <-- NOVO: Adicionar a rota para Categorias */}
+                <Route path='*' element={<NotFoundPage />} />
+            </Routes>
+        </div>
+    </Router> 
+);
+
+export default Rotas;

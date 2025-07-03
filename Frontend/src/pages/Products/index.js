@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from "react";
-// Removido: import { Container, Title, ModalOverlay, ModalContent } from "./style"; // Sem styled components
 import api from "../../services/api";
+import { AiOutlinePlus } from "react-icons/ai";
+
+// IMPORTANTE: Importar todos os componentes estilizados do arquivo style.js
+import {
+  Container,
+  Title,
+  PrimaryButton,
+  Table,
+  TableHeader,
+  TableBody,
+  ActionButton,
+  ActionButtonsWrapper, // Novo wrapper para os botões de ação na tabela
+  ModalOverlay,
+  ModalContent,
+  Input,      // Componente Input
+  Select,     // Componente Select para categoria
+  Button,     // Componente Button
+  ErrorMessage, // Componente ErrorMessage
+  // Removido: TextArea    // <-- REMOVIDO: Este componente não está sendo usado nesta página
+} from "./style";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +33,7 @@ const Products = () => {
 
   const loadProducts = async () => {
     try {
-      const response = await api.get("/api/products/AllProducts"); // ENDPOINT CORRIGIDO
+      const response = await api.get("/api/products/AllProducts");
       setProducts(response.data);
     } catch (err) {
       console.error("Erro ao carregar produtos:", err.response || err);
@@ -35,7 +54,7 @@ const Products = () => {
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Deseja realmente excluir este produto?")) {
       try {
-        await api.delete(`/api/products/${id}`); // ENDPOINT CORRIGIDO
+        await api.delete(`/api/products/${id}`);
         loadProducts();
       } catch (err) {
         console.error("Erro ao excluir produto:", err.response || err);
@@ -45,53 +64,64 @@ const Products = () => {
   };
 
   return (
-    <div style={{ paddingLeft: '80px', paddingTop: '20px' }}> {/* Substituído Container */}
-      <h1 style={{ fontSize: '2em', marginBottom: '20px' }}>Gerenciamento de Produtos</h1> {/* Substituído Title */}
-      <button onClick={handleAddProduct} style={{ padding: '10px 15px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginBottom: '20px' }}>Adicionar Produto</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr style={{ backgroundColor: '#f2f2f2' }}>
-            <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>ID</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Nome</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Preço</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Categoria ID</th>
-            <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Ações</th>
+    <Container>
+      <Title>Gerenciamento de Produtos</Title>
+      <PrimaryButton onClick={handleAddProduct}>
+        <AiOutlinePlus size={20} /> Adicionar Produto
+      </PrimaryButton>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <Table>
+        <TableHeader>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Categoria ID</th>
+            <th>Ações</th>
           </tr>
-        </thead>
-        <tbody>
+        </TableHeader>
+        <TableBody>
           {products.map((product) => (
-            <tr key={product.id_product} style={{ borderBottom: '1px solid #eee' }}>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.id_product}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.name}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>R$ {parseFloat(product.price).toFixed(2)}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.category_id}</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>
-                <button onClick={() => handleEditProduct(product)} style={{ padding: '5px 10px', backgroundColor: '#ffc107', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer', marginRight: '5px' }}>
-                  Editar
-                </button>
-                <button onClick={() => handleDeleteProduct(product.id_product)} style={{ padding: '5px 10px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>
-                  Excluir
-                </button>
+            <tr key={product.id_product}>
+              <td>{product.id_product}</td>
+              <td>{product.name}</td>
+              <td>R$ {parseFloat(product.price).toFixed(2)}</td>
+              <td>{product.category_id}</td>
+              <td>
+                <ActionButtonsWrapper>
+                  <ActionButton $isEdit onClick={() => handleEditProduct(product)}>
+                    Editar
+                  </ActionButton>
+                  <ActionButton $isDelete onClick={() => handleDeleteProduct(product.id_product)}>
+                    Excluir
+                  </ActionButton>
+                </ActionButtonsWrapper>
               </td>
             </tr>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       {isModalOpen && (
         <ProductModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           product={currentProduct}
           onProductSaved={loadProducts}
+          // Passando os Styled Components para o modal
+          ModalOverlay={ModalOverlay}
+          ModalContent={ModalContent}
+          Input={Input}
+          Select={Select}
+          Button={Button}
+          ErrorMessage={ErrorMessage}
         />
       )}
-    </div>
+    </Container>
   );
 };
 
-// Componente Modal para Adicionar/Editar Produto (Sem Estilos)
-const ProductModal = ({ isOpen, onClose, product, onProductSaved }) => {
+// Componente Modal para Adicionar/Editar Produto
+const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, ModalContent, Input, Select, Button, ErrorMessage }) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -103,7 +133,7 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved }) => {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const response = await api.get("/api/categories/AllCategories"); // ENDPOINT CORRETO
+        const response = await api.get("/api/categories/AllCategories");
         setCategories(response.data);
       } catch (err) {
         console.error("Erro ao carregar categorias:", err.response || err);
@@ -169,27 +199,19 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved }) => {
   if (!isOpen) return null;
 
   return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex',
-      alignItems: 'center', justifyContent: 'center', zIndex: 1000
-    }}> {/* Substituído ModalOverlay */}
-      <div style={{
-        backgroundColor: 'white', padding: '20px', borderRadius: '8px',
-        maxWidth: '500px', width: '90%', boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-      }}> {/* Substituído ModalContent */}
-        <h2 style={{ marginBottom: '20px' }}>{product ? "Editar Produto" : "Novo Produto"}</h2>
+    <ModalOverlay>
+      <ModalContent>
+        <h2>{product ? "Editar Produto" : "Novo Produto"}</h2>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <input
+          <Input // Usando Input estilizado
             type="text"
             name="name"
             placeholder="Nome do produto"
             value={formData.name}
             onChange={handleChange}
             required
-            style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
           />
-          <input
+          <Input // Usando Input estilizado
             type="number"
             name="price"
             placeholder="Preço"
@@ -197,14 +219,12 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved }) => {
             value={formData.price}
             onChange={handleChange}
             required
-            style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
           />
-          <select
+          <Select // Usando Select estilizado
             name="category_id"
             value={formData.category_id}
             onChange={handleChange}
             required
-            style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
           >
             <option value="">Selecione uma categoria</option>
             {categories.map((cat) => (
@@ -212,17 +232,17 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved }) => {
                 {cat.name}
               </option>
             ))}
-          </select>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
-            <button type="submit" style={{ padding: '10px 15px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>{product ? "Atualizar" : "Criar"}</button>
-            <button type="button" onClick={onClose} style={{ padding: '10px 15px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+          </Select>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          <div className="button-group">
+            <Button type="submit" className="primary-action">{product ? "Atualizar" : "Criar"}</Button>
+            <Button type="button" className="secondary-action" onClick={onClose}>
               Cancelar
-            </button>
+            </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </ModalContent>
+    </ModalOverlay>
   );
 };
 

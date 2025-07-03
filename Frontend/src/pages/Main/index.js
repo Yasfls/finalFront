@@ -1,13 +1,13 @@
 import React from "react";
-// Removido: import { Container, Title } from "./style"; // Sem styled components
+import { Container, Title } from "./style"; // <-- IMPORTANTE: Importar os componentes estilizados
 
 const Main = () => {
 return (
-// Substituído Container
-<div style={{ paddingLeft: '80px', paddingTop: '20px' }}> {/* Ajuste simples para compensar a sidebar */}
-<h1 style={{ fontSize: '2em', marginBottom: '20px' }}>Página Inicial</h1> {/* Substituído Title */}
-<p>Bem-vindo à página principal do seu projeto React!</p>
-</div>
+// Substituído Container e removido o paddingLeft, que agora deve vir do Routes.js (div com marginLeft)
+<Container>
+<Title>Página Inicial</Title> {/* Substituído Title */}
+<p>Bem-vindo à página inicial!</p>
+</Container>
 );
 };
 export default Main;

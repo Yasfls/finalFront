@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// Removido: import { Container, Title, Form } from "./style"; // Sem styled components
+// Remova o Link padrão se você for usar o StyledLink
+import { useNavigate } from "react-router-dom";
+import { Container, Title, Form, IconWrapper, Input, Button, Divider, StyledLink } from "./style"; // <--- Importe os novos componentes estilizados
 import api from "../../services/api";
 import { login } from "../../services/auth";
+import { FaRegCircleUser } from "react-icons/fa6";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -12,7 +14,7 @@ const Login = () => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setError(""); // Limpa erros anteriores
+    setError("");
 
     if (!name || !password) {
       setError("Preencha nome e senha para continuar!");
@@ -20,9 +22,9 @@ const Login = () => {
     }
 
     try {
-      const response = await api.post("/api/users/login", { name, password }); // ENDPOINT CORRETO
-      login(response.data.accessToken); // Armazena o token recebido do backend
-      navigate("/app"); // Redireciona para a página principal/dashboard após login
+      const response = await api.post("/api/users/login", { name, password });
+      login(response.data.accessToken);
+      navigate("/app");
     } catch (err) {
       console.error("Erro ao fazer login:", err.response || err);
       if (err.response && err.response.data) {
@@ -34,35 +36,31 @@ const Login = () => {
   };
 
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      minHeight: '100vh', backgroundColor: '#f0f0f0', paddingLeft: '60px' /* Compensa sidebar */
-    }}> {/* Substituído Container */}
-      <h1 style={{ fontSize: '2em', marginBottom: '20px' }}>Entrar</h1> {/* Substituído Title */}
-      <form onSubmit={handleSignIn} style={{
-        display: 'flex', flexDirection: 'column', gap: '10px', padding: '20px',
-        border: '1px solid #ccc', borderRadius: '5px', backgroundColor: 'white', maxWidth: '300px', width: '100%'
-      }}> {/* Substituído Form */}
-        <input
+    <Container>
+      <Title>Entrar</Title>
+      <Form onSubmit={handleSignIn}>
+        <IconWrapper>
+          <FaRegCircleUser size={40} color="#fff" />
+        </IconWrapper>
+        <Input // <-- Usando o componente Input estilizado
           type="text"
           placeholder="Nome de Usuário"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
         />
-        <input
+        <Input // <-- Usando o componente Input estilizado
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
         />
-        <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Entrar</button>
-        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-        <hr style={{ borderTop: '1px solid #eee', margin: '10px 0' }} />
-        <Link to="/register" style={{ textAlign: 'center', color: '#007bff', textDecoration: 'none' }}>Criar conta grátis</Link>
-      </form>
-    </div>
+
+        <Button type="submit">Entrar</Button> {/* <-- Usando o componente Button estilizado */}
+        {error && <p>{error}</p>}
+        <Divider /> {/* <-- Usando o componente Divider estilizado */}
+        <StyledLink to="/register">Criar conta grátis</StyledLink> {/* <-- Usando o componente StyledLink estilizado */}
+      </Form>
+    </Container>
   );
 };
 

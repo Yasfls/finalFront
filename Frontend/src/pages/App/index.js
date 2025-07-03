@@ -1,16 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// Removido: import { Container, Title } from "./style"; // Sem styled components
+import { Container, Title, StyledLink } from "./style"; // <-- IMPORTANTE: Importar os componentes estilizados
 
 const App = () => {
 return (
-// Substituído Container
-<div style={{ paddingLeft: '80px', paddingTop: '20px' }}> {/* Ajuste simples para compensar a sidebar */}
-<h1 style={{ fontSize: '2em', marginBottom: '20px' }}>Tela de Aplicação</h1> {/* Substituído Title */}
+// Substituído Container e removido os estilos inline
+<Container>
+<Title>Tela de Aplicação</Title> {/* Substituído Title */}
 {/* conteúdo da página de aplicação */}
-<p>Bem-vindo ao dashboard da sua aplicação!</p>
-<Link to="/logout">Logout</Link>
-</div>
+<p>Bem-vindo ao dashboard!</p>
+<StyledLink to="/logout">Logout</StyledLink> {/* Usando StyledLink */}
+</Container>
 );
 };
 export default App;

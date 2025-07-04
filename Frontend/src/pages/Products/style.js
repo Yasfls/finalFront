@@ -20,7 +20,7 @@ export const Title = styled.h1`
  
 export const PrimaryButton = styled.button`
   padding: 8px 18px;
-  background-color: #ff69b4; /* Rosa vibrante */
+  background-color: #9fb981; /* Rosa vibrante */
   color: white;
   border: none;
   border-radius: 8px;
@@ -30,13 +30,15 @@ export const PrimaryButton = styled.button`
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+  box-shadow: 0 4px 10px #9fb981(255, 105, 180, 0.3);
   margin-bottom: 20px;
   width: fit-content;
   align-self: center; /* Centraliza o botão horizontalmente */
  
   &:hover {
-    background-color: #e85a9f;
+    background-color: #79896a
+
+;
     transform: translateY(-2px);
   }
 &:active {
@@ -239,9 +241,9 @@ export const Button = styled.button`
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
  
   &.primary-action {
-    background-color: #ff69b4; /* Rosa principal */
+    background-color: #9fb981; /* Rosa principal */
 &:hover {
-      background-color: #e85a9f;
+      background-color: #79896a;
       transform: translateY(-2px);
     }
 &:active {

@@ -5,7 +5,7 @@ const Main = () => {
   return (
     <Container>
       <Title>Página Inicial</Title>
-      <p>Bem-vindo à página inicial!</p>
+      <p>Bem-vindo!</p>
     </Container>
   );
 };

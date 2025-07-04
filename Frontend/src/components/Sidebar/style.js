@@ -1,47 +1,50 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom"; // Importar Link para estilizar
- 
+import { Link } from "react-router-dom";
+
 export const SidebarContainer = styled.div`
   height: 100vh;
-  background-color:rgb(73, 82, 75);
+  background-color: rgb(73, 82, 75);
   transition: width 0.3s ease-in-out;
   width: ${(props) => (props.isOpen ? "200px" : "60px")};
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 100; /* Garante que fique acima do conteúdo */
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* Sombra suave */
-  overflow-x: hidden; /* Esconde o conteúdo extra quando fechado */
-  padding-top: 10px; /* Espaço no topo */
+  z-index: 100;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  overflow-x: hidden;
+  padding-top: 10px;
 `;
- 
+
 export const ToggleButton = styled.button`
   width: 40px;
   height: 40px;
   border: none;
-  background: #99BC85;
+  background: #99bc85;
   color: white;
-  position: absolute;
-  right: -20px; /* Metade para fora */
+  position: fixed;
+  left: ${(props) => (props.isOpen ? "180px" : "40px")};
   top: 20px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 101; /* Acima da sidebar */
+  z-index: 200;
   box-shadow: 0 2px 5px rgba(122, 146, 107, 0.4);
-  transition: background-color 0.3s ease, transform 0.2s ease;
- 
+  transition: left 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+
   &:hover {
     background-color: rgb(120, 138, 110);
     transform: scale(1.1);
   }
-&:active {
-    transform: scale(1.0);
+
+  span {
+    white-space: nowrap;
+    opacity: ${(props) => (props.show ? 1 : 0)};
+    transition: opacity 0.3s ease;
   }
 `;
- 
+
 export const NavMenu = styled.nav`
   padding: 20px 0;
   ul {
@@ -50,42 +53,43 @@ export const NavMenu = styled.nav`
     margin: 0;
   }
 `;
- 
-export const NavMenuItem = styled.li` /* NOVO: Componente para cada item da lista */
+
+export const NavMenuItem = styled.li`
   margin: 5px 0;
-  /* Estilo para o item ativo */
-  background-color: ${(props) => (props.$isActive ? "rgba(225, 236, 219)" : "transparent")}; /* Rosa suave transparente para ativo */
-  border-left: ${(props) => (props.$isActive ? "4px solid #99BC85" : "4px solid transparent")}; /* Borda rosa para ativo */
+  background-color: ${(props) =>
+    props.$isActive ? "rgba(225, 236, 219)" : "transparent"};
+  border-left: ${(props) =>
+    props.$isActive ? "4px solid #99BC85" : "4px solid transparent"};
   transition: background-color 0.3s ease, border-left 0.3s ease;
- 
+
   &:hover {
-    background-color: rgba(255, 105, 180, 0.1); /* Hover suave */
+    background-color: rgba(255, 105, 180, 0.1);
   }
 `;
- 
-export const StyledLink = styled(Link)` /* NOVO: Componente para os links */
+
+export const StyledLink = styled(Link)`
   color: white;
   text-decoration: none;
   padding: 10px 15px;
   display: flex;
   align-items: center;
-  gap: 15px; /* Mais espaço entre ícone e texto */
+  gap: 15px;
   transition: background-color 0.3s, color 0.3s;
-  overflow: hidden; /* Garante que o texto não "escape" ao esconder */
- 
-  svg { /* Estilo para os ícones */
-    flex-shrink: 0; /* Garante que o ícone não encolha */
+  overflow: hidden;
+
+  svg {
+    flex-shrink: 0;
   }
- 
+
   span {
     white-space: nowrap;
-    opacity: ${(props) => (props.$isOpen ? 1 : 0)}; /* Usar prop para controlar opacidade */
+    opacity: ${(props) => (props.$isOpen ? 1 : 0)};
     transition: opacity 0.3s ease;
-    font-size: 1.05em; /* Fonte ligeiramente maior */
+    font-size: 1.05em;
   }
 `;
- 
-export const LogoutButton = styled.button` /* NOVO: Componente para o botão de Logout */
+
+export const LogoutButton = styled.button`
   background: none;
   border: none;
   color: white;
@@ -98,11 +102,11 @@ export const LogoutButton = styled.button` /* NOVO: Componente para o botão de 
   width: 100%;
   text-align: left;
   transition: background-color 0.3s ease;
- 
+
   &:hover {
-    background-color: rgba(255, 105, 180, 0.1); /* Hover suave */
+    background-color: rgba(255, 105, 180, 0.1);
   }
- 
+
   span {
     white-space: nowrap;
     opacity: ${(props) => (props.$isOpen ? 1 : 0)};

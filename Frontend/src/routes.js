@@ -11,18 +11,17 @@ import Categories from './pages/Categories';
 import App from './pages/App';
 import Sidebar from "./components/Sidebar";
 import { isAuthenticated } from "./services/auth";
-import { SidebarProvider, useSidebar } from "./contexts/SidebarContext"; // <-- NOVO: Importar Contexto
- 
-// Componente para envolver o conteúdo principal e ajustar o margin
+import { SidebarProvider, useSidebar } from "./contexts/SidebarContext";
+
 const MainContentWrapper = ({ children }) => {
   const { isSidebarOpen } = useSidebar();
   return (
-<div style={{ marginLeft: isSidebarOpen ? '200px' : '60px', transition: 'margin-left 0.3s ease-in-out' }}>
+    <div style={{ marginLeft: isSidebarOpen ? '200px' : '60px', transition: 'margin-left 0.3s ease-in-out' }}>
       {children}
-</div>
+    </div>
   );
 };
- 
+
 const MainPage = () => <Main />
 const LoginPage = () => <Login />
 const LogoutPage = () => <Logout />
@@ -31,32 +30,32 @@ const RegisterPage = () => <Register />
 const ProductsPage = () => <Products />
 const OrdersPage = () => <Orders />
 const CategoriesPage = () => <Categories />
- 
+
 const AppPage = () => {
-if (!isAuthenticated()){
-return <Navigate to="/" replace />;
+  if (!isAuthenticated()){
+    return <Navigate to="/" replace />;
+  }
+  return <App />;
 }
-return <App />;
-}
- 
+
 const Rotas = () => (
-<Router>
-<SidebarProvider> {/* Envolve toda a aplicação com o provedor de contexto */}
-<Sidebar /> {/* Sidebar é renderizado fora do MainContentWrapper para ser fixo */}
-<MainContentWrapper> {/* Conteúdo principal, cujo margin será ajustado */}
-<Routes>
-<Route path='/' element={<MainPage />} />
-<Route path='/login' element={<LoginPage />} />
-<Route path='/logout' element={<LogoutPage />} />
-<Route path='/app' element={<AppPage />} />
-<Route path='/register' element={<RegisterPage />} />
-<Route path='/products' element={<ProductsPage />} />
-<Route path='/orders' element={<OrdersPage />} />
-<Route path='/categories' element={<CategoriesPage />} />
-<Route path='*' element={<NotFoundPage />} />
-</Routes>
-</MainContentWrapper>
-</SidebarProvider>
-</Router> 
+  <Router>
+    <SidebarProvider>
+      <Sidebar />
+      <MainContentWrapper>
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/logout' element={<LogoutPage />} />
+          <Route path='/app' element={<AppPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/products' element={<ProductsPage />} />
+          <Route path='/orders' element={<OrdersPage />} />
+          <Route path='/categories' element={<CategoriesPage />} />
+          <Route path='/uma-pagina-ai' element={<NotFoundPage />} />
+        </Routes>
+      </MainContentWrapper>
+    </SidebarProvider>
+  </Router>
 );
 export default Rotas;

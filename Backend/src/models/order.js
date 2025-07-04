@@ -10,10 +10,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    status: { // NOVO CAMPO: Status do pedido
+    status: { 
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Em Preparo' // Valor padrão ao criar um novo pedido
+      defaultValue: 'Em Preparo' 
     }
   });
 

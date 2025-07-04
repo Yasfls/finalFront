@@ -72,6 +72,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## front
 ## npm install styled-components jwt-decode react-icons
+## npm run build
 
 ## back
 ## npm install cors

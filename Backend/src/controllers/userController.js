@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import db from "../models/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -7,7 +6,6 @@ dotenv.config({ path: "./config/.env" });
 
 const User = db.User;
 
-// POST
 const addUser = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
@@ -28,7 +26,6 @@ const addUser = async (req, res) => {
   }
 };
 
-// GET
 const getAllUsers = async (req, res) => {
   try {
     let users = await User.findAll({
@@ -41,7 +38,6 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// GET
 const getSingleUser = async (req, res) => {
   try {
     let id = req.params.id;
@@ -53,7 +49,6 @@ const getSingleUser = async (req, res) => {
   }
 };
 
-// PUT
 const updateUser = async (req, res) => {
   const id = req.params.id;
 
@@ -87,7 +82,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-// DELETE
 const deleteUser = async (req, res) => {
   try {
     let id = req.params.id;

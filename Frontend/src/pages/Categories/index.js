@@ -2,29 +2,28 @@ import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { AiOutlinePlus } from "react-icons/ai";
 
-// Importar TODOS os componentes estilizados necessários
 import {
   Container,
   Title,
   PrimaryButton,
-  TableContainer,      // NOVO: Importado para envolver a tabela
+  TableContainer,
   Table,
   TableHeader,
-  ScrollableTableBody, // NOVO: Substitui TableBody para rolagem
+  ScrollableTableBody,
   ActionButton,
   ActionButtonsWrapper,
   ModalOverlay,
   ModalContent,
   Input,
   Button,
-  ErrorMessage // NOVO: Para exibir mensagens de erro estilizadas
+  ErrorMessage
 } from "./style";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
-  const [error, setError] = useState(""); // Estado de erro para a página principal
+  const [error, setError] = useState("");
 
   useEffect(() => {
     loadCategories();
@@ -70,9 +69,9 @@ const Categories = () => {
       <PrimaryButton onClick={handleAddCategory}>
         <AiOutlinePlus size={20} /> Criar Nova Categoria
       </PrimaryButton>
-      {error && <ErrorMessage>{error}</ErrorMessage>} {/* Usando o componente ErrorMessage */}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
 
-      <TableContainer> {/* NOVO: Envolve a tabela na caixa de vidro */}
+      <TableContainer>
         <Table>
           <TableHeader>
             <tr>
@@ -81,7 +80,7 @@ const Categories = () => {
               <th>Ações</th>
             </tr>
           </TableHeader>
-          <ScrollableTableBody> {/* NOVO: Substitui TableBody para ter rolagem */}
+          <ScrollableTableBody>
             {categories.map((category) => (
               <tr key={category.id_category}>
                 <td>{category.id_category}</td>
@@ -100,7 +99,7 @@ const Categories = () => {
             ))}
           </ScrollableTableBody>
         </Table>
-      </TableContainer> {/* Fim do TableContainer */}
+      </TableContainer>
 
       {isModalOpen && (
         <CategoryModal
@@ -108,22 +107,20 @@ const Categories = () => {
           onClose={() => setIsModalOpen(false)}
           category={currentCategory}
           onCategorySaved={loadCategories}
-          // Passando os Styled Components para o modal
           ModalOverlay={ModalOverlay}
           ModalContent={ModalContent}
           Input={Input}
           Button={Button}
-          ErrorMessage={ErrorMessage} // Passando ErrorMessage para o modal também
+          ErrorMessage={ErrorMessage}
         />
       )}
     </Container>
   );
 };
 
-// Componente Modal para Adicionar/Editar Categoria (Agora recebe Styled Components como props)
 const CategoryModal = ({ isOpen, onClose, category, onCategorySaved, ModalOverlay, ModalContent, Input, Button, ErrorMessage }) => {
   const [categoryName, setCategoryName] = useState("");
-  const [error, setError] = useState(""); // Estado de erro para o modal
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (category) {
@@ -131,8 +128,8 @@ const CategoryModal = ({ isOpen, onClose, category, onCategorySaved, ModalOverla
     } else {
       setCategoryName("");
     }
-    setError(""); // Limpa o erro ao abrir o modal
-  }, [category, isOpen]); // Adicionado isOpen como dependência para resetar ao abrir
+    setError("");
+  }, [category, isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -164,14 +161,14 @@ const CategoryModal = ({ isOpen, onClose, category, onCategorySaved, ModalOverla
       <ModalContent>
         <h2>{category ? "Editar Categoria" : "Nova Categoria"}</h2>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <Input // Usando o componente Input estilizado
+          <Input
             type="text"
             placeholder="Nome da Categoria"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
             required
           />
-          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Usando o componente ErrorMessage */}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           <div className="button-group">
             <Button type="submit" className="primary-action">
               {category ? "Atualizar" : "Criar"}

@@ -1,10 +1,7 @@
-import { where } from "sequelize";
 import db from "../models/index.js";
-
 const Category = db.Category;
 const Product = db.Product;
 
-// POST
 const addCategory = async (req, res) => {
   try {
     let info = { name: req.body.name };
@@ -16,7 +13,6 @@ const addCategory = async (req, res) => {
   }
 };
 
-// GET
 const getAllCategories = async (req, res) => {
   try {
     let categories = await Category.findAll({});
@@ -26,7 +22,6 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-// GET
 const getSingleCategory = async (req, res) => {
   try {
     let id = req.params.id;
@@ -37,7 +32,6 @@ const getSingleCategory = async (req, res) => {
   }
 };
 
-// PUT
 const updateCategory = async (req, res) => {
   try {
     let id = req.params.id;
@@ -48,7 +42,6 @@ const updateCategory = async (req, res) => {
   }
 };
 
-// DELETE
 const deleteCategory = async (req, res) => {
   try {
     let id = req.params.id;
@@ -59,7 +52,6 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-// GET
 const getProductsbyCategory = async (req, res) => {
   try {
     const data = await Category.findAll({

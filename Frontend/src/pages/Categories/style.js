@@ -4,11 +4,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  /* Fundo gradiente verde/marfim (como em Produtos e Pedidos) */
   background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333; /* Cor do texto padrão */
+  color: #333;
 `;
 
 export const Title = styled.h1`
@@ -20,7 +19,7 @@ export const Title = styled.h1`
 
 export const PrimaryButton = styled.button`
   padding: 8px 18px;
-  background-color: #9fb981; /* <-- NOVO: Verde mais escuro para o botão principal */
+  background-color: #9fb981;
   color: white;
   border: none;
   border-radius: 8px;
@@ -30,13 +29,13 @@ export const PrimaryButton = styled.button`
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px #9fb981(107, 142, 35, 0.4); /* <-- NOVO: Sombra em tom verde */
+  box-shadow: 0 4px 10px rgba(107, 142, 35, 0.4);
   margin-bottom: 20px;
   width: fit-content;
-  align-self: flex-start; /* Alinha à esquerda, como o botão de Pedidos */
+  align-self: flex-start;
 
   &:hover {
-    background-color: #79896a; /* <-- NOVO: Verde ainda mais escuro no hover */
+    background-color: #79896a;
     transform: translateY(-2px);
   }
   &:active {
@@ -45,99 +44,101 @@ export const PrimaryButton = styled.button`
 `;
 
 export const TableContainer = styled.div`
-  background: rgba(255, 255, 255, 0.2); /* Fundo transparente para o efeito de vidro */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
-  border-radius: 15px; /* IMPORTANTE: Aplica os cantos arredondados na caixa externa */
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  overflow: hidden; /* IMPORTANTE: Garante que o conteúdo interno (incluindo o TableHeader) seja cortado pelos cantos arredondados do contêiner */
+  overflow: hidden;
   margin-bottom: 20px;
 `;
 
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  background: transparent; /* A tabela em si será transparente */
-  table-layout: fixed; /* Garante larguras de coluna fixas */
+  background: transparent;
+  table-layout: fixed;
 `;
 
 export const TableHeader = styled.thead`
-  background-color: rgba(255, 255, 255, 0.8); /* Fundo BRANCO semi-transparente (como em Produtos) */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background-color: rgba(255, 255, 255, 0.8);
+
   th {
     padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Borda como em Produtos */
+    border: 1px solid rgba(255, 255, 255, 0.5);
     text-align: left;
     color: #333;
     font-weight: bold;
-    /* Larguras das colunas ESPECÍFICAS para Categorias */
-    &:nth-child(1) { width: 15%; } /* ID */
-    &:nth-child(2) { width: 45%; } /* Nome */
-    &:nth-child(3) { width: 40%; } /* Ações */
+
+    &:nth-child(1) { width: 15%; }
+    &:nth-child(2) { width: 45%; }
+    &:nth-child(3) { width: 40%; }
   }
 `;
 
 export const ScrollableTableBody = styled.tbody`
-  display: block; /* Permite controlar a altura com max-height */
-  max-height: 400px; /* Altura máxima para a rolagem */
-  overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
   width: 100%;
   
-  /* Esconde a barra de rolagem para alguns navegadores */
   &::-webkit-scrollbar {
     width: 0px;
     background: transparent;
   }
   & {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   
   tr {
-    display: table; /* Para fazer as TRs se ajustarem ao display:block do tbody */
+    display: table;
     width: 100%;
-    table-layout: fixed; /* Para que as colunas tenham larguras fixas */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Borda como em Produtos */
+    table-layout: fixed;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     &:last-child {
       border-bottom: none;
     }
     &:hover {
-      background-color: rgba(255, 255, 255, 0.8); /* Fundo branco no hover (como Produtos) */
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
   td {
     padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Borda como em Produtos */
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: #555;
     vertical-align: top;
-    /* Larguras das colunas do corpo ESPECÍFICAS para Categorias */
-    &:nth-child(1) { width: 15%; } /* ID */
-    &:nth-child(2) { width: 45%; } /* Nome */
-    &:nth-child(3) { width: 40%; } /* Ações */
+    &:nth-child(1) { width: 15%; }
+    &:nth-child(2) { width: 45%; }
+    &:nth-child(3) { width: 40%; }
   }
 `;
- 
+
 export const ActionButtonsWrapper = styled.div`
   display: flex;
-  flex-direction: column; /* Coloca um embaixo do outro */
-  gap: 5px; /* Espaçamento entre eles */
+  flex-direction: column;
+  gap: 5px;
   align-items: flex-start;
 `;
- 
+
 export const ActionButton = styled.button`
-  padding: 5px 10px; /* Ajustado para ser consistente */
+  padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.85em; /* Ajustado para ser consistente */
+  font-size: 0.85em;
   transition: background-color 0.3s ease, transform 0.2s ease;
   color: white;
-  width: 90px; /* Largura fixa para alinhamento */
-  text-align: center; /* Centraliza o texto dentro do botão */
+  width: 90px;
+  text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
   ${props => props.$isEdit && `
-    background-color: #ff8c69; /* Laranja Rosado para Editar (como em Produtos) */
+    background-color: #ff8c69;
     &:hover {
       background-color: #fa7259;
       transform: translateY(-1px);
@@ -145,7 +146,7 @@ export const ActionButton = styled.button`
   `}
 
   ${props => props.$isDelete && `
-    background-color: #ff4d6d; /* Rosa avermelhado forte para Excluir (como em Produtos) */
+    background-color: #ff4d6d;
     &:hover {
       background-color: #e60033;
       transform: translateY(-1px);
@@ -169,9 +170,9 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: rgba(255, 255, 255, 0.95); /* Levemente mais opaco para consistência */
+  background: rgba(255, 255, 255, 0.95);
   padding: 30px;
-  border-radius: 15px; /* Bordas arredondadas */
+  border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 500px;
@@ -187,13 +188,9 @@ export const ModalContent = styled.div`
     text-align: center;
   }
 
-  p { /* Mensagens de erro no modal, ou texto normal. Será substituído por ErrorMessage */
-    /* Removido o estilo direto de p aqui, pois ErrorMessage terá seu próprio estilo */
-  }
-
-  .button-group { /* Para agrupar botões dentro do modal */
+  .button-group {
     display: flex;
-    justify-content: center; /* Centraliza os botões */
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
   }
@@ -210,8 +207,8 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #ff69b4; /* Rosa vibrante no foco */
-    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.3);
+    border-color: #9fb981;
+    box-shadow: 0 0 0 2px #9fb981;
   }
 `;
 
@@ -223,24 +220,22 @@ export const Button = styled.button`
   font-size: 1em;
   color: white;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra mais destacada */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 
-  /* Estilos para o botão de 'Criar'/'Atualizar' no modal */
   &.primary-action {
-    background-color: #9fb981; /* Rosa principal */
+    background-color: #9fb981;
     &:hover {
       background-color: #79896a;
       transform: translateY(-2px);
     }
     &:active {
       transform: translateY(0);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra mais suave ao clicar */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   }
   
-  /* Estilos para o botão de 'Cancelar' no modal */
   &.secondary-action {
-    background-color: #6c757d; /* Cinza */
+    background-color: #6c757d;
     &:hover {
       background-color: #5a6268;
       transform: translateY(-2px);

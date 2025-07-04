@@ -18,7 +18,6 @@ const sequelize = new Sequelize(
   }
 );
 
-// Testando a conexão com o banco
 try {
   await sequelize.authenticate();
   console.log('Conectado com o Banco de Dados.');
@@ -37,7 +36,6 @@ db.Product = ProductModel(sequelize, DataTypes);
 db.Order = OrderModel(sequelize, DataTypes);
 db.OrderProduct = OrderProductModel(sequelize, DataTypes);
 
-// Relacionamentos das tabelas
 db.User.associate(db);
 db.Category.associate(db);
 db.Product.associate(db);

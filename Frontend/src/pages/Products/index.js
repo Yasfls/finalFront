@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { AiOutlinePlus } from "react-icons/ai";
- 
+
 import {
   Container,
   Title,
   PrimaryButton,
-  TableContainer, // NOVO: Usar TableContainer
+  TableContainer,
   Table,
   TableHeader,
-  ScrollableTableBody, // NOVO: Usar ScrollableTableBody
+  ScrollableTableBody,
   ActionButton,
   ActionButtonsWrapper,
   ModalOverlay,
@@ -19,17 +19,17 @@ import {
   Button,
   ErrorMessage,
 } from "./style";
- 
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [error, setError] = useState("");
- 
+
   useEffect(() => {
     loadProducts();
   }, []);
- 
+
   const loadProducts = async () => {
     try {
       const response = await api.get("/api/products/AllProducts");
@@ -39,17 +39,17 @@ const Products = () => {
       setError("Erro ao carregar produtos.");
     }
   };
- 
+
   const handleAddProduct = () => {
     setCurrentProduct(null);
     setIsModalOpen(true);
   };
- 
+
   const handleEditProduct = (product) => {
     setCurrentProduct(product);
     setIsModalOpen(true);
   };
- 
+
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Deseja realmente excluir este produto?")) {
       try {
@@ -61,51 +61,51 @@ const Products = () => {
       }
     }
   };
- 
+
   return (
-<Container>
-<Title>Gerenciamento de Produtos</Title>
-<PrimaryButton onClick={handleAddProduct}>
-<AiOutlinePlus size={20} /> Adicionar Produto
-</PrimaryButton>
+    <Container>
+      <Title>Gerenciamento de Produtos</Title>
+      <PrimaryButton onClick={handleAddProduct}>
+        <AiOutlinePlus size={20} /> Adicionar Produto
+      </PrimaryButton>
       {error && <ErrorMessage>{error}</ErrorMessage>}
- 
-      <TableContainer> {/* NOVO: Envolve a tabela na caixa de vidro */}
-<Table> {/* A tabela em si */}
-<TableHeader>
-<tr>
-<th>ID</th>
-<th>Nome</th>
-<th>Preço</th>
-<th>Categoria ID</th>
-<th>Ações</th>
-</tr>
-</TableHeader>
-<ScrollableTableBody> {/* NOVO: O corpo da tabela com rolagem */}
+
+      <TableContainer>
+        <Table>
+          <TableHeader>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Categoria ID</th>
+              <th>Ações</th>
+            </tr>
+          </TableHeader>
+          <ScrollableTableBody>
             {products.map((product) => (
-<tr key={product.id_product}>
-<td>{product.id_product}</td>
-<td>{product.name}</td>
-<td>R$ {parseFloat(product.price).toFixed(2)}</td>
-<td>{product.category_id}</td>
-<td>
-<ActionButtonsWrapper>
-<ActionButton $isEdit onClick={() => handleEditProduct(product)}>
+              <tr key={product.id_product}>
+                <td>{product.id_product}</td>
+                <td>{product.name}</td>
+                <td>R$ {parseFloat(product.price).toFixed(2)}</td>
+                <td>{product.category_id}</td>
+                <td>
+                  <ActionButtonsWrapper>
+                    <ActionButton $isEdit onClick={() => handleEditProduct(product)}>
                       Editar
-</ActionButton>
-<ActionButton $isDelete onClick={() => handleDeleteProduct(product.id_product)}>
+                    </ActionButton>
+                    <ActionButton $isDelete onClick={() => handleDeleteProduct(product.id_product)}>
                       Excluir
-</ActionButton>
-</ActionButtonsWrapper>
-</td>
-</tr>
+                    </ActionButton>
+                  </ActionButtonsWrapper>
+                </td>
+              </tr>
             ))}
-</ScrollableTableBody>
-</Table>
-</TableContainer> {/* Fim do TableContainer */}
- 
+          </ScrollableTableBody>
+        </Table>
+      </TableContainer>
+
       {isModalOpen && (
-<ProductModal
+        <ProductModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           product={currentProduct}
@@ -118,11 +118,10 @@ const Products = () => {
           ErrorMessage={ErrorMessage}
         />
       )}
-</Container>
+    </Container>
   );
 };
- 
-// Componente Modal para Adicionar/Editar Produto
+
 const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, ModalContent, Input, Select, Button, ErrorMessage }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -131,7 +130,7 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
   });
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
- 
+
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -142,7 +141,7 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
         setError("Erro ao carregar categorias para seleção.");
       }
     };
- 
+
     if (isOpen) {
       loadCategories();
       if (product) {
@@ -160,7 +159,7 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
       }
     }
   }, [isOpen, product]);
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -168,22 +167,22 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
       [name]: value,
     }));
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
- 
+
     if (!formData.name || !formData.price || !formData.category_id) {
       setError("Todos os campos são obrigatórios.");
       return;
     }
- 
+
     const productData = {
       ...formData,
       price: parseFloat(formData.price),
       category_id: parseInt(formData.category_id),
     };
- 
+
     try {
       if (product) {
         await api.put(`/api/products/${product.id_product}`, productData);
@@ -197,15 +196,15 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
       setError("Erro ao salvar produto. Verifique os dados e tente novamente.");
     }
   };
- 
+
   if (!isOpen) return null;
- 
+
   return (
-<ModalOverlay>
-<ModalContent>
-<h2>{product ? "Editar Produto" : "Novo Produto"}</h2>
-<form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-<Input
+    <ModalOverlay>
+      <ModalContent>
+        <h2>{product ? "Editar Produto" : "Novo Produto"}</h2>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <Input
             type="text"
             name="name"
             placeholder="Nome do produto"
@@ -213,7 +212,7 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
             onChange={handleChange}
             required
           />
-<Input
+          <Input
             type="number"
             name="price"
             placeholder="Preço"
@@ -222,30 +221,30 @@ const ProductModal = ({ isOpen, onClose, product, onProductSaved, ModalOverlay, 
             onChange={handleChange}
             required
           />
-<Select
+          <Select
             name="category_id"
             value={formData.category_id}
             onChange={handleChange}
             required
->
-<option value="">Selecione uma categoria</option>
+          >
+            <option value="">Selecione uma categoria</option>
             {categories.map((cat) => (
-<option key={cat.id_category} value={cat.id_category}>
+              <option key={cat.id_category} value={cat.id_category}>
                 {cat.name}
-</option>
+              </option>
             ))}
-</Select>
+          </Select>
           {error && <ErrorMessage>{error}</ErrorMessage>}
-<div className="button-group">
-<Button type="submit" className="primary-action">{product ? "Atualizar" : "Criar"}</Button>
-<Button type="button" className="secondary-action" onClick={onClose}>
+          <div className="button-group">
+            <Button type="submit" className="primary-action">{product ? "Atualizar" : "Criar"}</Button>
+            <Button type="button" className="secondary-action" onClick={onClose}>
               Cancelar
-</Button>
-</div>
-</form>
-</ModalContent>
-</ModalOverlay>
+            </Button>
+          </div>
+        </form>
+      </ModalContent>
+    </ModalOverlay>
   );
 };
- 
+
 export default Products;

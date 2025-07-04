@@ -24,8 +24,7 @@ import {
   ProductsListContainer,
   ProductListItemLabel,
   ProductListItemInputGroup,
-  Select,
-} from "./style"; // Caminho ajustado para './style'
+} from "./style";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -127,16 +126,6 @@ const Orders = () => {
     }
   };
 
-  const handleUpdateStatus = async (id, newStatus) => {
-    try {
-      await api.put(`/api/orders/${id}`, { status: newStatus });
-      loadOrders();
-    } catch (err) {
-      console.error("Erro ao atualizar status do pedido:", err.response || err);
-      setError("Erro ao atualizar status do pedido.");
-    }
-  };
-
   return (
     <Container>
       <Title>Gerenciamento de Pedidos</Title>
@@ -149,7 +138,7 @@ const Orders = () => {
         <Table>
           <TableHeader>
             <tr>
-              <th>No.</th> {/* A primeira coluna, para o índice */}
+              <th>No.</th>
               <th>ID do Pedido</th>
               <th>ID do Usuário</th>
               <th>Data/Hora Criação</th>
@@ -157,71 +146,37 @@ const Orders = () => {
               <th>Ações</th>
             </tr>
           </TableHeader>
+
           <ScrollableTableBody>
             {orders.length === 0 ? (
               <tr>
-                <td
-                  colSpan="6"
-                  style={{
-                    textAlign: "center",
-                    padding: "20px",
-                    color: "#777",
-                  }}
-                >
+                <td colSpan="6" style={{ textAlign: "center", padding: "20px", color: "#777" }}>
                   Nenhum pedido encontrado.
                 </td>
               </tr>
             ) : (
-              orders.map(
-                (
-                  order,
-                  index // Use 'index' para o número sequencial da linha
-                ) => (
-                  <tr key={order.id_order}>
-                    {/* 1ª TD: Número Sequencial */}
-                    <td>{index + 1}</td>
-
-                    {/* 2ª TD: ID do Pedido */}
-                    <td>{order.id_order}</td>
-
-                    {/* 3ª TD: ID do Usuário */}
-                    <td>{order.user_id}</td>
-
-                    {/* 4ª TD: Data/Hora Criação */}
-                    <td>
-                      {new Date(order.createdAt).toLocaleString("pt-BR", {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </td>
-
-                    {/* 5ª TD: Status */}
-                    <td>{order.status}</td>
-
-                    {/* 6ª TD: Ações (Contém os botões) */}
-                    <td>
-                      <ActionButtonsWrapper>
-                        <ActionButton
-                          $isView
-                          onClick={() => handleViewOrder(order)}
-                        >
-                          Visualizar
-                        </ActionButton>
-                        {/* ... Seus outros botões de status aqui ... */}
-                        <ActionButton
-                          $isDelete
-                          onClick={() => handleDeleteOrder(order.id_order)}
-                        >
-                          Excluir
-                        </ActionButton>
-                      </ActionButtonsWrapper>
-                    </td>
-                  </tr>
-                )
-              )
+              orders.map((order, index) => (
+                <tr key={order.id_order}>
+                  <td>{index + 1}</td>
+                  <td>{order.id_order}</td>
+                  <td>{order.user_id}</td>
+                  <td>{new Date(order.createdAt).toLocaleString("pt-BR", {
+                    year: "numeric", month: "numeric", day: "numeric",
+                    hour: "2-digit", minute: "2-digit"
+                  })}</td>
+                  <td>{order.status}</td>
+                  <td>
+                    <ActionButtonsWrapper>
+                      <ActionButton $isView onClick={() => handleViewOrder(order)}>
+                        Visualizar
+                      </ActionButton>
+                      <ActionButton $isDelete onClick={() => handleDeleteOrder(order.id_order)}>
+                        Excluir
+                      </ActionButton>
+                    </ActionButtonsWrapper>
+                  </td>
+                </tr>
+              ))
             )}
           </ScrollableTableBody>
         </Table>
@@ -253,7 +208,6 @@ const Orders = () => {
   );
 };
 
-// Componente Modal para Visualização de Pedidos
 const OrderModal = ({
   isOpen,
   onClose,
@@ -316,7 +270,6 @@ const OrderModal = ({
   );
 };
 
-// Componente Modal para Seleção de Produtos para um Novo Pedido
 const ProductSelectionModal = ({
   onClose,
   onConfirm,

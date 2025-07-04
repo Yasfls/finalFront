@@ -4,8 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  /* NOVO: Fundo muito sutil, quase branco, para imitar a tela de Categorias */
-  background: linear-gradient(135deg, #f8f8f8 0%, #eef3f0 100%); /* Um branco com leve toque de verde/cinza */
+  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -19,25 +18,23 @@ export const Title = styled.h1`
 `;
 
 export const PrimaryButton = styled.button`
-  padding: 10px 20px;
-  /* NOVO: Verde vibrante igual ao botão de Categorias */
-  background-color: #32CD32; /* Um verde vibrante (LimeGreen) */
+  padding: 8px 18px;
+  background-color: #9fb981;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1.05em;
+  font-size: 1em;
   display: flex;
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  /* NOVO: Sombra na mesma tonalidade do novo verde */
-  box-shadow: 0 4px 10px rgba(50, 205, 50, 0.4);
+  box-shadow: 0 4px 10px rgba(159, 185, 129, 0.3);
   margin-bottom: 20px;
   width: fit-content;
-
+  
   &:hover {
-    background-color: #28a745; /* Um verde um pouco mais escuro no hover */
+    background-color: #79896a;
     transform: translateY(-2px);
   }
   &:active {
@@ -46,31 +43,46 @@ export const PrimaryButton = styled.button`
 `;
 
 export const TableContainer = styled.div`
-  background: #FFFFFF;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  overflow: auto;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
   max-height: 500px;
 `;
 
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  background: transparent; /* A tabela em si deve ser transparente para mostrar o fundo branco do TableContainer */
+  background: transparent;
   table-layout: fixed;
 `;
 
 export const TableHeader = styled.thead`
-  background-color: #FFFFFF; /* NOVO: Fundo branco, igual ao corpo da tabela */
+  display: block;
+  width: calc(100% - var(--scrollbar-width, 0px));
+  background-color: rgba(255, 255, 255, 0.8);
+
+  tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
   th {
-    padding: 15px 10px;
-    border: none; /* NOVO: Removido bordas de depuração e bordas laterais */
-    border-bottom: 1px solid #e0e0e0; /* NOVO: Borda inferior sutil */
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     text-align: left;
     color: #333;
     font-weight: bold;
-    
+    box-sizing: border-box;
+    word-wrap: break-word;
+
     &:nth-child(1) { width: 8%; text-align: center; }
     &:nth-child(2) { width: 12%; }
     &:nth-child(3) { width: 15%; }
@@ -81,29 +93,52 @@ export const TableHeader = styled.thead`
 `;
 
 export const ScrollableTableBody = styled.tbody`
+  display: block;
+  flex-grow: 1;
+  max-height: calc(500px - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    width: 17px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
+  }
 
   tr {
     display: table;
     width: 100%;
     table-layout: fixed;
-    border-bottom: 1px solid #f0f0f0; /* NOVO: Borda inferior muito sutil para separar as linhas */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+
     &:last-child {
       border-bottom: none;
     }
     &:hover {
-      background-color: #f9f9f9; /* NOVO: Fundo um pouco mais claro no hover */
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
+
   td {
-    padding: 12px 10px;
-    border: 1px solid #777; /* Deixe as bordas de depuração por enquanto */
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: #555;
-    vertical-align: middle;
-    white-space: nowrap;
+    vertical-align: top;
+    box-sizing: border-box;
+    word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: table-cell !important;
-    
+
     &:nth-child(1) { width: 8%; text-align: center; }
     &:nth-child(2) { width: 12%; }
     &:nth-child(3) { width: 15%; }
@@ -112,52 +147,55 @@ export const ScrollableTableBody = styled.tbody`
     &:nth-child(6) { width: 30%; text-align: center; }
   }
 `;
-  
+
 export const ActionButtonsWrapper = styled.div`
   display: flex;
-  flex-direction: row; /* NOVO: Botões lado a lado como nas categorias */
-  flex-wrap: wrap; /* Permite quebrar linha se não houver espaço suficiente */
-  gap: 8px; /* Espaço entre os botões */
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
   align-items: center;
-  justify-content: center; /* Centralizar os botões dentro da célula */
+  justify-content: center;
   height: 100%;
 `;
-  
+
 export const ActionButton = styled.button`
-  padding: 6px 8px; /* Padding ajustado para botões menores/links */
-  background-color: transparent; /* NOVO: Fundo transparente */
-  border: none; /* NOVO: Sem borda */
+  padding: 5px 10px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.85em; /* Ligeiramente maior que antes, para legibilidade de links */
-  transition: color 0.3s ease, transform 0.2s ease; /* Transição para cor, não background */
-  box-shadow: none; /* NOVO: Sem sombra */
-  width: fit-content; /* NOVO: Largura se ajusta ao conteúdo */
-  white-space: nowrap; /* Evita quebra de linha do texto do botão */
+  font-size: 0.85em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  color: white;
+  width: 90px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  white-space: nowrap;
   
-  /* Cores dos botões de ação na tabela, adaptadas ao estilo de categorias */
   ${props => props.$isView && `
-    color: #32CD32; /* Verde vibrante para Visualizar/Editar */
-    &:hover { color: #28a745; transform: translateY(-1px); }
+    background-color: #ff8c69;
+    &:hover { background-color: #fa7259; transform: translateY(-1px); }
   `}
   ${props => props.$isPrepare && `
-    color: #007bff; /* Azul para "Em Preparo" (consistente com um status) */
-    &:hover { color: #0056b3; transform: translateY(-1px); }
+    color: white;
+    background-color: #007bff;
+    &:hover { background-color: #0056b3; transform: translateY(-1px); }
   `}
   ${props => props.$isReady && `
-    color: #ffc107; /* Amarelo/Laranja para "Pronto" */
-    &:hover { color: #e0a800; transform: translateY(-1px); }
+    color: white;
+    background-color: #ffc107;
+    &:hover { background-color: #e0a800; transform: translateY(-1px); }
   `}
   ${props => props.$isDeliver && `
-    color: #6f42c1; /* Roxo para "Entregue" (consistente com um status final) */
-    &:hover { color: #563d7c; transform: translateY(-1px); }
+    color: white;
+    background-color: #6f42c1;
+    &:hover { background-color: #563d7c; transform: translateY(-1px); }
   `}
   ${props => props.$isDelete && `
-    color: #dc3545; /* Vermelho padrão para Excluir */
-    &:hover { color: #bd2130; transform: translateY(-1px); }
+    background-color: #ff4d6d;
+    &:hover { background-color: #e60033; transform: translateY(-1px); }
   `}
 `;
-  
+
 export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -172,7 +210,7 @@ export const ModalOverlay = styled.div`
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 `;
-  
+
 export const ModalContent = styled.div`
   background: rgba(255, 255, 255, 0.95);
   padding: 30px;
@@ -200,9 +238,9 @@ export const ModalContent = styled.div`
   }
 
   p {
-    color: #ff3333; /* Cor do texto de erro */
-    background-color: #ffe5e5; /* Fundo de erro (rosa claro) */
-    border: 1px solid #ff3333; /* Borda de erro */
+    color: #ff3333;
+    background-color: #ffe5e5;
+    border: 1px solid #ff3333;
     padding: 10px;
     border-radius: 5px;
     text-align: center;
@@ -215,7 +253,7 @@ export const ModalContent = styled.div`
     margin-top: 20px;
   }
 `;
-  
+
 export const Input = styled.input`
   height: 48px;
   padding: 0 15px;
@@ -227,11 +265,11 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #32CD32; /* NOVO: Verde vibrante no foco */
-    box-shadow: 0 0 0 2px rgba(50, 205, 50, 0.3); /* NOVO: Sombra verde no foco */
+    border-color: #9fb981;
+    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
   }
 `;
-  
+
 export const Select = styled.select`
   height: 48px;
   padding: 0 15px;
@@ -246,11 +284,11 @@ export const Select = styled.select`
 
   &:focus {
     outline: none;
-    border-color: #32CD32; /* NOVO: Verde vibrante no foco */
-    box-shadow: 0 0 0 2px rgba(50, 205, 50, 0.3); /* NOVO: Sombra verde no foco */
+    border-color: #9fb981;
+    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
   }
 `;
-  
+
 export const Button = styled.button`
   padding: 12px 25px;
   border: none;
@@ -262,9 +300,9 @@ export const Button = styled.button`
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 
   &.primary-action {
-    background-color: #32CD32; /* NOVO: Verde vibrante principal */
+    background-color: #9fb981;
     &:hover {
-      background-color: #28a745;
+      background-color: #79896a;
       transform: translateY(-2px);
     }
     &:active {
@@ -272,7 +310,7 @@ export const Button = styled.button`
     }
   }
   &.secondary-action {
-    background-color: #6c757d; /* Cinza */
+    background-color: #6c757d;
     &:hover {
       background-color: #5a6268;
       transform: translateY(-2px);
@@ -282,7 +320,7 @@ export const Button = styled.button`
     }
   }
 `;
-  
+
 export const ErrorMessage = styled.p`
   color: #ff3333;
   background-color: #ffe5e5;
@@ -292,7 +330,7 @@ export const ErrorMessage = styled.p`
   text-align: center;
   margin-top: 15px;
 `;
-  
+
 export const TextArea = styled.textarea`
   padding: 8px 15px;
   border: 1px solid #e0e0e0;
@@ -304,12 +342,11 @@ export const TextArea = styled.textarea`
   
   &:focus {
     outline: none;
-    border-color: #32CD32; /* NOVO: Verde vibrante no foco */
-    box-shadow: 0 0 0 2px rgba(50, 205, 50, 0.3); /* NOVO: Sombra verde no foco */
+    border-color: #9fb981;
+    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
   }
 `;
 
-// Componentes para itens de produto dentro dos modais (mantidos com as atualizações de foco de Input/Select/Button)
 export const ProductItemWrapper = styled.div`
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.5);

@@ -86,7 +86,7 @@ export const Button = styled.button`
   box-shadow: 0 5px 15px rgba(122, 146, 107, 0.4);
 
   &:hover {
-    background:rgb(120, 138, 110);
+    background: rgb(120, 138, 110);
     transform: translateY(-3px);
   }
   &:active {
@@ -104,12 +104,12 @@ export const Divider = styled.hr`
 
 export const StyledLink = styled(Link)`
   font-size: 15px;
-  color:rgb(142, 155, 145);
+  color: rgb(142, 155, 145);
   text-decoration: none;
   margin-top: 5px;
   transition: color 0.2s;
   &:hover {
-    color:rgb(92, 100, 94);
+    color: rgb(92, 100, 94);
     text-decoration: underline;
   }
 `;

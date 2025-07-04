@@ -1,15 +1,14 @@
 import styled from "styled-components";
-// Importações de Link não são necessárias aqui, mas são comuns para StyledLink
-// import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); /* Fundo gradiente rosa/roxo suave */
+  /* Aplicando o gradiente verde da nova paleta */
+  background: linear-gradient(135deg, rgb(225, 236, 219) 0%, #E4EFE7 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333; /* Cor do texto padrão */
+  color: #333;
 `;
 
 export const Title = styled.h1`
@@ -20,8 +19,8 @@ export const Title = styled.h1`
 `;
 
 export const PrimaryButton = styled.button`
-  padding: 12px 25px;
-  background-color: #ff69b4; /* Rosa vibrante */
+  padding: 8px 18px; /* Padding ajustado */
+  background-color: #99BC85; /* Cor verde principal da nova paleta */
   color: white;
   border: none;
   border-radius: 8px;
@@ -31,11 +30,13 @@ export const PrimaryButton = styled.button`
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+  box-shadow: 0 4px 10px rgba(122, 146, 107, 0.3); /* Sombra com tom verde */
   margin-bottom: 20px;
+  width: fit-content;
+  align-self: flex-start; /* Alinha à esquerda */
 
   &:hover {
-    background-color: #e85a9f;
+    background-color: rgb(120, 138, 110); /* Verde mais escuro no hover */
     transform: translateY(-2px);
   }
   &:active {
@@ -43,84 +44,124 @@ export const PrimaryButton = styled.button`
   }
 `;
 
+// Componente que será a "caixa de vidro" para a tabela
+export const TableContainer = styled.div`
+  background: rgba(255, 255, 255, 0.2); /* Fundo transparente para o efeito de vidro */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
+  border-radius: 15px; /* Bordas arredondadas */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra difusa */
+  backdrop-filter: blur(10px); /* Efeito de desfoque de vidro */
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden; /* Esconde o conteúdo que ultrapassar o rounded border */
+  margin-bottom: 20px; /* Espaço abaixo da tabela */
+`;
+
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.7); /* Fundo transparente para o efeito de vidro */
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: transparent; /* A tabela em si será transparente */
+  table-layout: fixed; /* Fixa o layout da tabela */
 `;
 
 export const TableHeader = styled.thead`
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(153, 188, 133, 0.8); /* Cabeçalho em tom de verde transparente */
   th {
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.5);
     text-align: left;
     color: #333;
     font-weight: bold;
+    /* Ajustando as larguras das colunas para Pedidos */
+    &:nth-child(1) { width: 15%; } /* ID do Pedido */
+    &:nth-child(2) { width: 15%; } /* ID do Usuário */
+    &:nth-child(3) { width: 25%; } /* Data/Hora Criação */
+    &:nth-child(4) { width: 15%; } /* Status */
+    &:nth-child(5) { width: 30%; } /* Ações */
   }
 `;
 
-export const TableBody = styled.tbody`
+// Componente para o corpo da tabela com rolagem
+export const ScrollableTableBody = styled.tbody`
+  display: block; /* Permite controlar a altura com max-height */
+  max-height: 400px; /* Altura máxima para a rolagem */
+  overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
+  width: 100%;
+
+  /* Esconde a barra de rolagem para alguns navegadores */
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+  & {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   tr {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    &:last-child {
-      border-bottom: none;
+    display: table; /* Para fazer as TRs se ajustarem ao display:block do tbody */
+    width: 100%;
+    table-layout: fixed; /* Para que as colunas tenham larguras fixas */
+    border-bottom: 1px solid rgba(228, 239, 231, 0.8); /* Linhas divisórias sutis */
+    &:last-child td {
+      border-bottom: none; /* Remove a última borda inferior */
     }
     &:hover {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(245, 249, 247, 0.8);
     }
   }
   td {
     padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(228, 239, 231, 0.4); /* Bordas mais suaves */
     color: #555;
-    vertical-align: top; /* Garante que o conteúdo fique no topo da célula */
+    vertical-align: top;
+    /* Larguras das colunas do corpo, devem corresponder às do cabeçalho */
+    &:nth-child(1) { width: 15%; }
+    &:nth-child(2) { width: 15%; }
+    &:nth-child(3) { width: 25%; }
+    &:nth-child(4) { width: 15%; }
+    &:nth-child(5) { width: 30%; }
   }
 `;
 
 export const ActionButtonsWrapper = styled.div`
   display: flex;
-  flex-direction: column; /* Coloca um embaixo do outro */
-  gap: 5px; /* Espaçamento entre eles */
-  align-items: flex-start; /* Alinha à esquerda na célula */
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
 `;
 
 export const ActionButton = styled.button`
-  padding: 8px 12px;
+  padding: 5px 10px; /* Padding reduzido e correto */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.85em;
   transition: background-color 0.3s ease, transform 0.2s ease;
   color: white;
-  width: 120px; /* Largura fixa para manter alinhamento vertical mais limpo */
+  width: 120px; /* Largura fixa para alinhamento */
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
   ${props => props.$isView && `
-    background-color: #17a2b8; /* Azul para Visualizar */
-    &:hover { background-color: #138496; transform: translateY(-1px); }
+    background-color: #6C757D; /* Cinza para Visualizar (neutro) */
+    &:hover { background-color: #5A6268; transform: translateY(-1px); }
   `}
   ${props => props.$isPrepare && `
-    background-color: #ffc107; /* Amarelo para Em Preparo */
-    &:hover { background-color: #e0a800; transform: translateY(-1px); }
+    background-color: #F8D066; /* Amarelo suave (para "Em Preparo") */
+    color: #333; /* Texto escuro para contraste */
+    &:hover { background-color: #E8B446; transform: translateY(-1px); }
   `}
   ${props => props.$isReady && `
-    background-color: #28a745; /* Verde para Pronto */
-    &:hover { background-color: #218838; transform: translateY(-1px); }
+    background-color: #99BC85; /* Verde suave (para "Pronto") */
+    &:hover { background-color: #88A578; transform: translateY(-1px); }
   `}
   ${props => props.$isDeliver && `
-    background-color: #6c757d; /* Cinza para Entregue */
-    &:hover { background-color: #5a6268; transform: translateY(-1px); }
+    background-color: #4CAF50; /* Verde mais forte (para "Entregue") */
+    &:hover { background-color: #45A049; transform: translateY(-1px); }
   `}
   ${props => props.$isDelete && `
-    background-color: #dc3545; /* Vermelho para Excluir */
-    &:hover { background-color: #c82333; transform: translateY(-1px); }
+    background-color: #DC3545; /* Vermelho padrão para Excluir */
+    &:hover { background-color: #C82333; transform: translateY(-1px); }
   `}
 `;
 
@@ -145,7 +186,7 @@ export const ModalContent = styled.div`
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 600px;
+  max-width: 600px; /* Aumentado um pouco para modais de Pedidos */
   position: relative;
   display: flex;
   flex-direction: column;
@@ -158,7 +199,7 @@ export const ModalContent = styled.div`
     text-align: center;
   }
 
-  h3 {
+  h3 { /* Para "Produtos do Pedido" */
     color: #555;
     font-size: 1.4em;
     margin-top: 20px;
@@ -174,59 +215,13 @@ export const ModalContent = styled.div`
     text-align: center;
   }
 
-  .product-item { /* Estilo para cada item de produto dentro dos modais */
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    p {
-      color: #333;
-      margin: 0;
-      background: none;
-      border: none;
-      padding: 0;
-      text-align: left;
-    }
-  }
-
+  /* Refatorando .product-item e .products-list para serem componentes */
+  
   .button-group {
     display: flex;
-    justify-content: flex-end; /* Alinha botões à direita */
+    justify-content: flex-end; /* Alinha botões à direita (padrão dos modais) */
     gap: 10px;
     margin-top: 20px;
-  }
-
-  .products-list { /* Estilo para a lista de produtos no ProductSelectionModal */
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 4px;
-    background: #f9f9f9;
-  }
-
-  .products-list label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    font-size: 1em;
-    color: #333;
-  }
-
-  .products-list input[type="checkbox"] {
-    margin-right: 8px;
-    transform: scale(1.2); /* Aumenta o checkbox */
-  }
-
-  .products-list input[type="number"],
-  .products-list textarea {
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: calc(100% - 16px); /* Ajusta a largura */
-    margin-top: 5px;
   }
 `;
 
@@ -242,12 +237,30 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #ff69b4;
-    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.3);
+    border-color: #99BC85; /* Borda da nova paleta ao focar */
+    box-shadow: 0 0 0 2px rgba(153, 188, 133, 0.3);
   }
 `;
 
-// Componente Button reutilizável
+export const Select = styled.select`
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:focus {
+    outline: none;
+    border-color: #99BC85; /* Borda da nova paleta ao focar */
+    box-shadow: 0 0 0 2px rgba(153, 188, 133, 0.3);
+  }
+`;
+
 export const Button = styled.button`
   padding: 12px 25px;
   border: none;
@@ -259,9 +272,9 @@ export const Button = styled.button`
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 
   &.primary-action {
-    background-color: #ff69b4; /* Rosa principal */
+    background-color: #99BC85; /* Verde principal da nova paleta */
     &:hover {
-      background-color: #e85a9f;
+      background-color: #88A578;
       transform: translateY(-2px);
     }
     &:active {
@@ -273,7 +286,7 @@ export const Button = styled.button`
     background-color: #6c757d; /* Cinza */
     &:hover {
       background-color: #5a6268;
-      transform: translateY(-2px);
+      transform: translateY(0);
     }
     &:active {
       transform: translateY(0);
@@ -282,11 +295,73 @@ export const Button = styled.button`
 `;
 
 export const ErrorMessage = styled.p`
-  color: #ff3333;
-  background-color: #ffe5e5;
-  border: 1px solid #ff3333;
+  color: #DC3545; /* Vermelho para erro */
+  background-color: #F8D066; /* Fundo amarelo para erro (mais suave) */
+  border: 1px solid #DC3545;
   padding: 10px;
   border-radius: 4px;
   text-align: center;
   margin-top: 15px;
+`;
+
+export const TextArea = styled.textarea`
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: #99BC85; /* Nova paleta ao focar */
+    box-shadow: 0 0 0 2px rgba(153, 188, 133, 0.3);
+  }
+`;
+
+// NOVO: Styled Components para os itens de produto dentro dos modais
+export const ProductItemWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  p {
+    color: #333;
+    margin: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+  }
+`;
+
+export const ProductsListContainer = styled.div`
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  background: #f9f9f9;
+`;
+
+export const ProductListItemLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #333;
+  input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+  }
+`;
+
+export const ProductListItemInputGroup = styled.div`
+  margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;

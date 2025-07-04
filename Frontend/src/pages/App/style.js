@@ -1,32 +1,31 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom'; // Importar Link para StyledLink
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  /* padding: 2rem; Ajustado para padding-left em Routes ou um div global, e padding-top aqui */
   padding-top: 20px; /* Padding no topo para conteúdo */
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); /* Fundo gradiente rosa/roxo suave */
+  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center; /* Centraliza o texto */
-  color: #333; /* Cor do texto padrão */
+  text-align: center;
+  color: #333;
 `;
 
 export const Title = styled.h2`
   color: #333;
   font-size: 2.2rem;
-  margin-bottom: 20px; /* Espaçamento abaixo do título */
+  margin-bottom: 20px;
 `;
 
 export const StyledLink = styled(Link)`
   font-size: 15px;
-  color: #ff69b4; /* Links em rosa */
+  color:rgb(142, 155, 145);
   text-decoration: none;
-  margin-top: 20px; /* Espaçamento acima do link */
+  margin-top: 5px;
   transition: color 0.2s;
   &:hover {
-    color: #e85a9f;
+    color:rgb(92, 100, 94);
     text-decoration: underline;
   }
 `;

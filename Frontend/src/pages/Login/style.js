@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom'; // <-- CORREÇÃO: Importar Link do react-router-dom
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
@@ -7,8 +7,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); /* Fundo gradiente rosa/roxo suave */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
   padding: 2rem;
 `;
 
@@ -22,13 +22,13 @@ export const Title = styled.h2`
 export const Form = styled.form`
   width: 100%;
   max-width: 400px;
-  background: rgba(255, 255, 255, 0.2); /* Fundo branco transparente */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil para o efeito de vidro */
-  padding: 60px 40px 30px; /* Mais padding no topo para o ícone */
-  border-radius: 20px; /* Bordas mais arredondadas */
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra mais difusa */
-  backdrop-filter: blur(10px); /* Efeito de desfoque de vidro */
-  -webkit-backdrop-filter: blur(10px); /* Compatibilidade com navegadores Webkit */
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 60px 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,36 +36,36 @@ export const Form = styled.form`
 `;
 
 export const IconWrapper = styled.div`
-  background-color: #ff69b4; /* Rosa vibrante para o círculo do ícone */
+  background-color: #99BC85;
   border-radius: 50%;
   padding: 15px;
   position: absolute;
-  top: -40px; /* Posição para ficar acima do card */
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 2; /* Garante que o ícone fique na frente */
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const Input = styled.input` /* Componente Input para reutilizar */
+export const Input = styled.input`
   height: 50px;
   margin-bottom: 20px;
   padding: 0 15px;
   color: #333;
   font-size: 16px;
   width: 100%;
-  border: none; /* Sem borda, para o efeito de vidro */
+  border: none;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.7); /* Fundo do input levemente transparente */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra sutil nos inputs */
+  background: rgb(255, 255, 255);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 
   &:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.9); /* Mais opaco ao focar */
-    box-shadow: 0 0 0 2px #ff69b4; /* Borda rosa suave ao focar */
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0 2px #99BC85;
   }
 
   &::placeholder {
@@ -73,43 +73,43 @@ export const Input = styled.input` /* Componente Input para reutilizar */
   }
 `;
 
-export const Button = styled.button` /* Componente Button para reutilizar */
+export const Button = styled.button`
   color: #fff;
   font-size: 18px;
-  background: #ff69b4; /* Rosa vibrante */
+  background: #99BC85;
   height: 55px;
   border: none;
   border-radius: 8px;
   width: 100%;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4); /* Sombra rosa para o botão */
+  box-shadow: 0 5px 15px rgba(122, 146, 107, 0.4);
 
   &:hover {
-    background: #e85a9f; /* Rosa um pouco mais escuro no hover */
-    transform: translateY(-3px); /* Efeito de "levantar" */
+    background:rgb(120, 138, 110);
+    transform: translateY(-3px);
   }
   &:active {
     transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(255, 105, 180, 0.3);
+    box-shadow: 0 2px 5px rgba(122, 146, 107, 0.4);
   }
 `;
 
-export const Divider = styled.hr` /* Componente Divider para reutilizar */
+export const Divider = styled.hr`
   margin: 30px 0;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Linha divisória mais sutil */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   width: 100%;
 `;
 
-export const StyledLink = styled(Link)` /* Componente Link para reutilizar */
+export const StyledLink = styled(Link)`
   font-size: 15px;
-  color: #ff69b4; /* Links em rosa */
+  color:rgb(142, 155, 145);
   text-decoration: none;
   margin-top: 5px;
   transition: color 0.2s;
   &:hover {
-    color: #e85a9f;
+    color:rgb(92, 100, 94);
     text-decoration: underline;
   }
 `;

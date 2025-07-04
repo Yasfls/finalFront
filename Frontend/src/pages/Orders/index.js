@@ -4,21 +4,28 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { getToken } from "../../services/auth";
 import { jwtDecode } from "jwt-decode";
 
-// IMPORTANTE: Importar os componentes estilizados do arquivo style.js
+// IMPORTANTE: Importar todos os componentes estilizados do arquivo style.js
 import {
   Container,
   Title,
   PrimaryButton,
+  TableContainer,
   Table,
   TableHeader,
-  TableBody,
+  ScrollableTableBody,
+  ActionButtonsWrapper,
   ActionButton,
-  ActionButtonsWrapper, // Novo wrapper para os botões de ação na tabela
   ModalOverlay,
   ModalContent,
-  Input,      // Componente Input
-  Button,     // Componente Button
-  ErrorMessage // Componente ErrorMessage
+  Input,
+  Button,
+  ErrorMessage,
+  TextArea,
+  // Novos componentes para itens de produto no modal
+  ProductItemWrapper,
+  ProductsListContainer,
+  ProductListItemLabel,
+  ProductListItemInputGroup
 } from "./style";
 
 const Orders = () => {
@@ -123,42 +130,46 @@ const Orders = () => {
   };
 
   return (
-    <Container> {/* Usando o componente estilizado Container */}
-      <Title>Gerenciamento de Pedidos</Title> {/* Usando o componente estilizado Title */}
-      <PrimaryButton onClick={handleCreateOrder}> {/* Usando o componente estilizado PrimaryButton */}
+    <Container>
+      <Title>Gerenciamento de Pedidos</Title>
+      <PrimaryButton onClick={handleCreateOrder}>
         <AiOutlinePlus size={20} /> Criar Novo Pedido
       </PrimaryButton>
-      {error && <ErrorMessage>{error}</ErrorMessage>} {/* Usando ErrorMessage estilizado */}
-      <Table> {/* Usando o componente estilizado Table */}
-        <TableHeader> {/* Usando o componente estilizado TableHeader */}
-          <tr>
-            <th>ID do Pedido</th>
-            <th>ID do Usuário</th>
-            <th>Data/Hora Criação</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </TableHeader>
-        <TableBody> {/* Usando o componente estilizado TableBody */}
-          {orders.map((order) => (
-            <tr key={order.id_order}>
-              <td>{order.id_order}</td>
-              <td>{order.user_id}</td>
-              <td>{new Date(order.createdAt).toLocaleString()}</td>
-              <td>{order.status}</td>
-              <td>
-                <ActionButtonsWrapper> {/* Usando o novo wrapper para botões de ação */}
-                  <ActionButton $isView onClick={() => handleViewOrder(order)}>Visualizar</ActionButton>
-                  <ActionButton $isPrepare onClick={() => handleUpdateStatus(order.id_order, "Em Preparo")}>Em Preparo</ActionButton>
-                  <ActionButton $isReady onClick={() => handleUpdateStatus(order.id_order, "Pronto")}>Pronto</ActionButton>
-                  <ActionButton $isDeliver onClick={() => handleUpdateStatus(order.id_order, "Entregue")}>Entregue</ActionButton>
-                  <ActionButton $isDelete onClick={() => handleDeleteOrder(order.id_order)}>Excluir</ActionButton>
-                </ActionButtonsWrapper>
-              </td>
-            </tr>
-          ))}
-        </TableBody>
-      </Table>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+
+      <TableContainer> {/* Envolve a tabela na caixa de vidro */}
+        <Table>
+          <TableHeader>
+            <tr>
+              <th>ID do Pedido</th>
+              <th>ID do Usuário</th>
+              <th>Data/Hora Criação</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </TableHeader>
+          <ScrollableTableBody> {/* Corpo da tabela com rolagem */}
+            {orders.map((order) => (
+              <tr key={order.id_order}>
+                <td>{order.id_order}</td>
+                <td>{order.user_id}</td>
+                <td>{new Date(order.createdAt).toLocaleString()}</td>
+                <td>{order.status}</td>
+                <td>
+                  <ActionButtonsWrapper>
+                    <ActionButton $isView onClick={() => handleViewOrder(order)}>Visualizar</ActionButton>
+                    <ActionButton $isPrepare onClick={() => handleUpdateStatus(order.id_order, "Em Preparo")}>Em Preparo</ActionButton>
+                    <ActionButton $isReady onClick={() => handleUpdateStatus(order.id_order, "Pronto")}>Pronto</ActionButton>
+                    <ActionButton $isDeliver onClick={() => handleUpdateStatus(order.id_order, "Entregue")}>Entregue</ActionButton>
+                    <ActionButton $isDelete onClick={() => handleDeleteOrder(order.id_order)}>Excluir</ActionButton>
+                  </ActionButtonsWrapper>
+                </td>
+              </tr>
+            ))}
+          </ScrollableTableBody>
+        </Table>
+      </TableContainer>
+
       {showProductSelection && (
         <ProductSelectionModal
           onClose={() => setShowProductSelection(false)}
@@ -169,6 +180,7 @@ const Orders = () => {
           Input={Input}
           Button={Button}
           ErrorMessage={ErrorMessage}
+          TextArea={TextArea}
         />
       )}
       {isModalOpen && (
@@ -187,7 +199,7 @@ const Orders = () => {
 };
 
 // Componente Modal para Visualização de Pedidos
-const OrderModal = ({ isOpen, onClose, order, ModalOverlay, ModalContent, Button }) => { // Recebendo os Styled Components
+const OrderModal = ({ isOpen, onClose, order, ModalOverlay, ModalContent, Button }) => {
   if (!isOpen || !order) return null;
 
   return (
@@ -203,19 +215,19 @@ const OrderModal = ({ isOpen, onClose, order, ModalOverlay, ModalContent, Button
           <h3>Produtos do Pedido</h3>
           {order.products && order.products.length > 0 ? (
             order.products.map((item) => (
-              <div key={item.id_product} className="product-item"> {/* Usando classe para estilo interno no ModalContent */}
+              <ProductItemWrapper key={item.id_product}> {/* Usando ProductItemWrapper */}
                 <p>
                   <strong>{item.name}</strong> - R$ {parseFloat(item.price).toFixed(2)} - Quantidade: {item.order_product.quantity}
                 </p>
                 {item.order_product.observacao && <p>Observação: {item.order_product.observacao}</p>}
-              </div>
+              </ProductItemWrapper>
             ))
           ) : (
             <p>Nenhum produto associado a este pedido.</p>
           )}
         </div>
         <div className="button-group">
-          <Button type="button" className="secondary-action" onClick={onClose}> {/* Usando Button estilizado */}
+          <Button type="button" className="secondary-action" onClick={onClose}>
             Fechar
           </Button>
         </div>
@@ -225,7 +237,7 @@ const OrderModal = ({ isOpen, onClose, order, ModalOverlay, ModalContent, Button
 };
 
 // Componente Modal para Seleção de Produtos para um Novo Pedido
-const ProductSelectionModal = ({ onClose, onConfirm, ModalOverlay, ModalContent, Input, Button, ErrorMessage }) => { // Recebendo os Styled Components
+const ProductSelectionModal = ({ onClose, onConfirm, ModalOverlay, ModalContent, Input, Button, ErrorMessage, TextArea }) => {
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [error, setError] = useState("");
@@ -297,7 +309,7 @@ const ProductSelectionModal = ({ onClose, onConfirm, ModalOverlay, ModalContent,
       <ModalContent>
         <h2>Selecionar Produtos para o Pedido</h2>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <div className="products-list"> {/* Usando classe para estilo interno no ModalContent */}
+        <ProductsListContainer> {/* Usando ProductsListContainer */}
           {products.map((product) => {
             const isChecked = selectedProducts.some(
               (p) => p.id_product === product.id_product
@@ -307,17 +319,16 @@ const ProductSelectionModal = ({ onClose, onConfirm, ModalOverlay, ModalContent,
             );
             return (
               <div key={product.id_product} style={{ borderBottom: '1px solid #eee', padding: '10px 0' }}>
-                <label>
+                <ProductListItemLabel> {/* Usando ProductListItemLabel */}
                   <input
                     type="checkbox"
                     checked={isChecked}
                     onChange={() => handleProductSelect(product)}
-                    style={{ marginRight: '8px' }}
                   />
                   {product.name} - R$ {parseFloat(product.price).toFixed(2)}
-                </label>
+                </ProductListItemLabel>
                 {isChecked && (
-                  <div style={{ marginLeft: '25px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <ProductListItemInputGroup> {/* Usando ProductListItemInputGroup */}
                     <Input // Usando Input estilizado
                       type="number"
                       min="1"
@@ -325,21 +336,21 @@ const ProductSelectionModal = ({ onClose, onConfirm, ModalOverlay, ModalContent,
                       value={currentSelectedProduct?.quantity || 1}
                       onChange={(e) => handleQuantityChange(product.id_product, e.target.value)}
                     />
-                    <textarea
+                    <TextArea // Usando TextArea estilizado
                       placeholder="Observações (opcional)"
                       value={currentSelectedProduct?.observacao || ""}
                       onChange={(e) => handleObservationChange(product.id_product, e.target.value)}
                       rows="2"
                     />
-                  </div>
+                  </ProductListItemInputGroup>
                 )}
               </div>
             );
           })}
-        </div>
+        </ProductsListContainer>
         <div className="button-group">
-          <Button className="primary-action" onClick={handleConfirm}>Confirmar Pedido</Button> {/* Usando Button estilizado */}
-          <Button className="secondary-action" onClick={onClose}>Cancelar</Button> {/* Usando Button estilizado */}
+          <Button className="primary-action" onClick={handleConfirm}>Confirmar Pedido</Button>
+          <Button className="secondary-action" onClick={onClose}>Cancelar</Button>
         </div>
       </ModalContent>
     </ModalOverlay>

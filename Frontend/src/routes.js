@@ -7,11 +7,22 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
 import Products from './pages/Products';
-import Categories from './pages/Categories'; // <-- IMPORTANTE: Importar o novo componente
+import Categories from './pages/Categories';
 import App from './pages/App';
 import Sidebar from "./components/Sidebar";
 import { isAuthenticated } from "./services/auth";
-
+import { SidebarProvider, useSidebar } from "./contexts/SidebarContext"; // <-- NOVO: Importar Contexto
+ 
+// Componente para envolver o conteúdo principal e ajustar o margin
+const MainContentWrapper = ({ children }) => {
+  const { isSidebarOpen } = useSidebar();
+  return (
+<div style={{ marginLeft: isSidebarOpen ? '200px' : '60px', transition: 'margin-left 0.3s ease-in-out' }}>
+      {children}
+</div>
+  );
+};
+ 
 const MainPage = () => <Main />
 const LoginPage = () => <Login />
 const LogoutPage = () => <Logout />
@@ -19,32 +30,33 @@ const NotFoundPage = () => <NotFound />
 const RegisterPage = () => <Register />
 const ProductsPage = () => <Products />
 const OrdersPage = () => <Orders />
-const CategoriesPage = () => <Categories /> // <-- NOVO: Definir o componente da rota
-
+const CategoriesPage = () => <Categories />
+ 
 const AppPage = () => {
-    if (!isAuthenticated()){
-        return <Navigate to="/" replace />;
-    }
-    return <App />;
+if (!isAuthenticated()){
+return <Navigate to="/" replace />;
 }
-
+return <App />;
+}
+ 
 const Rotas = () => (
-    <Router>
-        <Sidebar /> {/* Sidebar é renderizado em todas as rotas */}
-        <div style={{ marginLeft: '60px' }}> {/* Adicionado um margin-left simples para não sobrepor a sidebar */}
-            <Routes>
-                <Route path='/' element={<MainPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/logout' element={<LogoutPage />} />
-                <Route path='/app' element={<AppPage />} />
-                <Route path='/register' element={<RegisterPage />} />
-                <Route path='/products' element={<ProductsPage />} />
-                <Route path='/orders' element={<OrdersPage />} />
-                <Route path='/categories' element={<CategoriesPage />} /> {/* <-- NOVO: Adicionar a rota para Categorias */}
-                <Route path='*' element={<NotFoundPage />} />
-            </Routes>
-        </div>
-    </Router> 
+<Router>
+<SidebarProvider> {/* Envolve toda a aplicação com o provedor de contexto */}
+<Sidebar /> {/* Sidebar é renderizado fora do MainContentWrapper para ser fixo */}
+<MainContentWrapper> {/* Conteúdo principal, cujo margin será ajustado */}
+<Routes>
+<Route path='/' element={<MainPage />} />
+<Route path='/login' element={<LoginPage />} />
+<Route path='/logout' element={<LogoutPage />} />
+<Route path='/app' element={<AppPage />} />
+<Route path='/register' element={<RegisterPage />} />
+<Route path='/products' element={<ProductsPage />} />
+<Route path='/orders' element={<OrdersPage />} />
+<Route path='/categories' element={<CategoriesPage />} />
+<Route path='*' element={<NotFoundPage />} />
+</Routes>
+</MainContentWrapper>
+</SidebarProvider>
+</Router> 
 );
-
 export default Rotas;

@@ -4,8 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  /* Ajustar o background do Container para o gradiente rosa padrão */
-  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
+  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%); /* Cor de fundo que você está usando */
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -19,7 +18,7 @@ export const Title = styled.h1`
 `;
  
 export const PrimaryButton = styled.button`
-  padding: 8px 18px;
+  padding: 8px 18px; /* <-- MODIFICADO: Padding horizontal e vertical reduzido */
   background-color: #ff69b4; /* Rosa vibrante */
   color: white;
   border: none;
@@ -32,8 +31,9 @@ export const PrimaryButton = styled.button`
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
   margin-bottom: 20px;
-  width: fit-content;
-  align-self: center; /* Centraliza o botão horizontalmente */
+  width: fit-content; /* <-- NOVO: Garante que a largura se ajuste ao conteúdo */
+  align-self: center; /* <-- NOVO: Se quiser centralizar o botão na página */
+ 
  
   &:hover {
     background-color: #e85a9f;
@@ -44,27 +44,19 @@ export const PrimaryButton = styled.button`
   }
 `;
  
-// NOVO: Componente que será a "caixa de vidro" para a tabela
-export const TableContainer = styled.div`
-  background: rgba(255, 255, 255, 0.2); /* Fundo transparente para o efeito de vidro */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
-  border-radius: 15px; /* Bordas arredondadas */
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra difusa */
-  backdrop-filter: blur(10px); /* Efeito de desfoque de vidro */
-  -webkit-backdrop-filter: blur(10px);
-  overflow: hidden; /* Esconde o conteúdo que ultrapassar o rounded border */
-  margin-bottom: 20px; /* Espaço abaixo da tabela */
-`;
- 
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  /* Estilos de glassmorphism removidos daqui e movidos para TableContainer */
-  background: transparent; /* A tabela em si será transparente */
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 `;
  
 export const TableHeader = styled.thead`
-  background-color: rgba(255, 255, 255, 0.8); /* Cabeçalho mais opaco */
+  background-color: rgba(255, 255, 255, 0.9);
   th {
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -74,27 +66,8 @@ export const TableHeader = styled.thead`
   }
 `;
  
-// NOVO: Componente para o corpo da tabela com rolagem
-export const ScrollableTableBody = styled.tbody`
-  display: block; /* Permite controlar a altura com max-height */
-  max-height: 400px; /* <-- MODIFICADO: Altura máxima para a rolagem */
-  overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
-  width: 100%;
- 
-  /* Esconde a barra de rolagem para alguns navegadores */
-&::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
-& {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
- 
+export const TableBody = styled.tbody`
   tr {
-    display: table; /* Para fazer as TRs se ajustarem ao display:block do tbody */
-    width: 100%;
-    table-layout: fixed; /* Para que as colunas tenham larguras fixas */
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 &:last-child {
       border-bottom: none;
@@ -111,7 +84,6 @@ export const ScrollableTableBody = styled.tbody`
   }
 `;
  
- 
 export const ActionButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -120,7 +92,7 @@ export const ActionButtonsWrapper = styled.div`
 `;
  
 export const ActionButton = styled.button`
-  padding: 5px 10px;
+  padding: 5px 10px; /* Padding reduzido para botões da tabela */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -176,7 +148,7 @@ export const ModalContent = styled.div`
     text-align: center;
   }
  
-  p { /* Mensagens de erro ou texto normal */
+  p {
     color: #ff3333;
     background-color: #ffe5e5;
     border: 1px solid #ff3333;

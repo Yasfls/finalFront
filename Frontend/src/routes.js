@@ -52,7 +52,7 @@ const Rotas = () => (
           <Route path='/products' element={<ProductsPage />} />
           <Route path='/orders' element={<OrdersPage />} />
           <Route path='/categories' element={<CategoriesPage />} />
-          <Route path='/uma-pagina-ai' element={<NotFoundPage />} />
+          <Route path='/*' element={<NotFoundPage />} />
         </Routes>
       </MainContentWrapper>
     </SidebarProvider>

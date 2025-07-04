@@ -43,7 +43,7 @@ db.Order.associate(db);
 db.OrderProduct.associate(db);
 
 try {
-  await sequelize.sync({ force: true });
+  await sequelize.sync({ force: false });
   console.log('Tabelas sincronizadas.');
 } catch (err) {
   console.error('Erro ao sincronizar as tabelas:', err);

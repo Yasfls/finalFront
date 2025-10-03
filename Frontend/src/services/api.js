@@ -1,16 +1,10 @@
 import axios from "axios";
-import { getToken } from "./auth";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000", 
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // 🔐 CRÍTICO: Permite o envio do HttpOnly cookie
 });
 
-api.interceptors.request.use(async config => {
-  const token = getToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// ⚠️ Interceptor de token REMOVIDO (Não é mais necessário ler LocalStorage)
 
 export default api;

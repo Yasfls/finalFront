@@ -1,9 +1,17 @@
-export const TOKEN_KEY = "accessToken";
-export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const login = token => {
- localStorage.setItem(TOKEN_KEY, token);
+export const IS_AUTHENTICATED = "isAuth";
+
+// A autenticação é verificada pelo backend (via cookie). 
+// No frontend, usamos um marcador simples.
+export const isAuthenticated = () => localStorage.getItem(IS_AUTHENTICATED) === 'true';
+
+// ⚠️ getToken foi REMOVIDO.
+
+// Marca o estado de autenticação no frontend
+export const login = () => {
+ localStorage.setItem(IS_AUTHENTICATED, 'true');
 }
+
 export const logout = () => {
- localStorage.removeItem(TOKEN_KEY);
+ // Iremos chamar o endpoint /logout para limpar o cookie HttpOnly no backend
+ localStorage.removeItem(IS_AUTHENTICATED);
 }

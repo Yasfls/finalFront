@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
-import { AiOutlinePlus, AiOutlineDownload } from "react-icons/ai"; // Adicionado ícone de Download
+import { AiOutlinePlus, AiOutlineDownload } from "react-icons/ai"; 
 
 import {
   Container,
@@ -18,9 +18,8 @@ import {
   Select,
   Button,
   ErrorMessage,
-  ProductItemWrapper,
   TextArea,
-} from "../Transactions/style"; // Reutilizando os estilos de Orders (agora Transactions)
+} from "./style"; 
 
 
 const Transactions = () => {
@@ -127,7 +126,7 @@ const Transactions = () => {
                   </td>
                 </tr>
               ))
-            )} {/* <-- CORREÇÃO AQUI: Fechamento do map e do operador ternário. */}
+            )}
           </ScrollableTableBody>
         </Table>
       </TableContainer>
@@ -138,7 +137,7 @@ const Transactions = () => {
           onClose={() => setIsModalOpen(false)}
           transaction={currentTransaction}
           onTransactionSaved={loadTransactions}
-          // Passando componentes de estilo para o modal (reutilizando)
+          // Passando componentes de estilo para o modal
           ModalOverlay={ModalOverlay}
           ModalContent={ModalContent}
           Input={Input}
@@ -213,9 +212,7 @@ const TransactionModal = ({ isOpen, onClose, transaction, onTransactionSaved, Mo
 
     try {
       if (transaction) {
-        // PUT para atualizar - Não permite trocar o anexo diretamente com o FormData PUT
-        // Usaremos apenas o PUT para os dados não-arquivos e o POST/DELETE para o anexo separadamente em um app mais robusto.
-        // Por simplificação, o PUT abaixo só envia dados do corpo.
+        // PUT para atualizar (enviando apenas os dados do corpo, sem novo anexo)
         const updateData = { type, amount, description, date, category_id };
 
         await api.put(`/api/transactions/${transaction.id_transaction}`, updateData);

@@ -5,8 +5,6 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
 import Register from './pages/Register';
-// ⚠️ REMOVIDO: import Products from './pages/Products';
-// ⚠️ RENOMEADO: import Transactions from './pages/Transactions'; (Novo nome do componente)
 import Transactions from './pages/Transactions'; 
 import Categories from './pages/Categories';
 import App from './pages/App';

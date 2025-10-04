@@ -29,10 +29,11 @@ export const PrimaryButton = styled.button`
   align-items: center;
   gap: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(159, 185, 129, 0.3);
+  box-shadow: 0 4px 10px rgba(107, 142, 35, 0.4);
   margin-bottom: 20px;
   width: fit-content;
-  
+  align-self: flex-start;
+
   &:hover {
     background-color: #79896a;
     transform: translateY(-2px);
@@ -51,9 +52,6 @@ export const TableContainer = styled.div`
   -webkit-backdrop-filter: blur(10px);
   overflow: hidden;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  max-height: 500px;
 `;
 
 export const Table = styled.table`
@@ -64,15 +62,10 @@ export const Table = styled.table`
 `;
 
 export const TableHeader = styled.thead`
-  display: block;
-  width: calc(100% - var(--scrollbar-width, 0px));
+  display: table;
+  width: 100%;
+  table-layout: fixed;
   background-color: rgba(255, 255, 255, 0.8);
-
-  tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
 
   th {
     padding: 15px;
@@ -80,47 +73,36 @@ export const TableHeader = styled.thead`
     text-align: left;
     color: #333;
     font-weight: bold;
-    box-sizing: border-box;
-    word-wrap: break-word;
 
-    &:nth-child(1) { width: 8%; text-align: center; }
-    &:nth-child(2) { width: 12%; }
-    &:nth-child(3) { width: 15%; }
-    &:nth-child(4) { width: 20%; text-align: center; }
-    &:nth-child(5) { width: 15%; text-align: center; }
-    &:nth-child(6) { width: 30%; text-align: center; }
+    &:nth-child(1) { width: 10%; } /* Data */
+    &:nth-child(2) { width: 10%; } /* Tipo */
+    &:nth-child(3) { width: 15%; } /* Valor */
+    &:nth-child(4) { width: 30%; } /* Descrição */
+    &:nth-child(5) { width: 15%; } /* Categoria */
+    &:nth-child(6) { width: 20%; } /* Ações */
   }
 `;
 
 export const ScrollableTableBody = styled.tbody`
   display: block;
-  flex-grow: 1;
-  max-height: calc(500px - 50px);
+  max-height: 400px;
   overflow-y: auto;
-  overflow-x: hidden;
   width: 100%;
-
+  
   &::-webkit-scrollbar {
-    width: 17px;
+    width: 0px;
     background: transparent;
   }
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    border: 3px solid transparent;
-    background-clip: padding-box;
-  }
   & {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.2) transparent;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
+  
   tr {
     display: table;
     width: 100%;
     table-layout: fixed;
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-
     &:last-child {
       border-bottom: none;
     }
@@ -128,34 +110,25 @@ export const ScrollableTableBody = styled.tbody`
       background-color: rgba(255, 255, 255, 0.8);
     }
   }
-
   td {
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     color: #555;
     vertical-align: top;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    &:nth-child(1) { width: 8%; text-align: center; }
-    &:nth-child(2) { width: 12%; }
+    &:nth-child(1) { width: 10%; }
+    &:nth-child(2) { width: 10%; }
     &:nth-child(3) { width: 15%; }
-    &:nth-child(4) { width: 20%; text-align: center; }
-    &:nth-child(5) { width: 15%; text-align: center; }
-    &:nth-child(6) { width: 30%; text-align: center; }
+    &:nth-child(4) { width: 30%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+    &:nth-child(5) { width: 15%; }
+    &:nth-child(6) { width: 20%; }
   }
 `;
 
 export const ActionButtonsWrapper = styled.div`
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 5px;
   align-items: center;
-  justify-content: center;
-  height: 100%;
 `;
 
 export const ActionButton = styled.button`
@@ -166,33 +139,37 @@ export const ActionButton = styled.button`
   font-size: 0.85em;
   transition: background-color 0.3s ease, transform 0.2s ease;
   color: white;
-  width: 90px;
+  width: fit-content;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  white-space: nowrap;
-  
-  ${props => props.$isView && `
+
+  ${props => props.$isEdit && `
     background-color: #ff8c69;
-    &:hover { background-color: #fa7259; transform: translateY(-1px); }
+    &:hover {
+      background-color: #fa7259;
+      transform: translateY(-1px);
+    }
   `}
-  ${props => props.$isPrepare && `
-    color: white;
-    background-color: #007bff;
-    &:hover { background-color: #0056b3; transform: translateY(-1px); }
-  `}
-  ${props => props.$isReady && `
-    color: white;
-    background-color: #ffc107;
-    &:hover { background-color: #e0a800; transform: translateY(-1px); }
-  `}
-  ${props => props.$isDeliver && `
-    color: white;
-    background-color: #6f42c1;
-    &:hover { background-color: #563d7c; transform: translateY(-1px); }
-  `}
+
   ${props => props.$isDelete && `
     background-color: #ff4d6d;
-    &:hover { background-color: #e60033; transform: translateY(-1px); }
+    &:hover {
+      background-color: #e60033;
+      transform: translateY(-1px);
+    }
+  `}
+
+  ${props => props.$isView && `
+    background-color: #6495ed;
+    &:hover {
+      background-color: #4169e1;
+      transform: translateY(-1px);
+    }
   `}
 `;
 
@@ -217,7 +194,7 @@ export const ModalContent = styled.div`
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 600px;
+  max-width: 500px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -230,25 +207,9 @@ export const ModalContent = styled.div`
     text-align: center;
   }
 
-  h3 {
-    color: #555;
-    font-size: 1.4em;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-
-  p {
-    color: #ff3333;
-    background-color: #ffe5e5;
-    border: 1px solid #ff3333;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-  }
-
   .button-group {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
   }
@@ -266,10 +227,11 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-color: #9fb981;
-    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
+    box-shadow: 0 0 0 2px #9fb981;
   }
 `;
 
+// Estilo adicionado para o Select no Modal
 export const Select = styled.select`
   height: 48px;
   padding: 0 15px;
@@ -278,16 +240,33 @@ export const Select = styled.select`
   font-size: 1em;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  cursor: pointer;
 
   &:focus {
     outline: none;
     border-color: #9fb981;
-    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
+    box-shadow: 0 0 0 2px #9fb981;
   }
 `;
+
+// Estilo adicionado para o TextArea no Modal
+export const TextArea = styled.textarea`
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  min-height: 100px;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: #9fb981;
+    box-shadow: 0 0 0 2px #9fb981;
+  }
+`;
+
 
 export const Button = styled.button`
   padding: 12px 25px;
@@ -307,8 +286,10 @@ export const Button = styled.button`
     }
     &:active {
       transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   }
+  
   &.secondary-action {
     background-color: #6c757d;
     &:hover {
@@ -317,6 +298,7 @@ export const Button = styled.button`
     }
     &:active {
       transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   }
 `;
@@ -330,64 +312,4 @@ export const ErrorMessage = styled.p`
   text-align: center;
   margin-top: 15px;
 `;
-
-export const TextArea = styled.textarea`
-  padding: 8px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1em;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  resize: vertical;
-  
-  &:focus {
-    outline: none;
-    border-color: #9fb981;
-    box-shadow: 0 0 0 2px rgba(159, 185, 129, 0.3);
-  }
-`;
-
-export const ProductItemWrapper = styled.div`
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  p {
-    color: #333;
-    margin: 0;
-    background: none;
-    border: none;
-    padding: 0;
-    text-align: left;
-  }
-`;
-
-export const ProductsListContainer = styled.div`
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 4px;
-  background: #f9f9f9;
-`;
-
-export const ProductListItemLabel = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  font-size: 1em;
-  color: #333;
-  input[type="checkbox"] {
-    margin-right: 8px;
-    transform: scale(1.2);
-  }
-`;
-
-export const ProductListItemInputGroup = styled.div`
-  margin-left: 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
+// O ProductItemWrapper foi removido pois não é usado aqui.

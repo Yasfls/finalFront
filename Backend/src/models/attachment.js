@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        transaction_id: {
+        transaction_id: { // Chave estrangeira que aponta para a Transação (lado "Muitos")
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -18,10 +18,14 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING(100),
             allowNull: true,
         },
+    }, {
+        // Adicionando timestamps e snake_case para consistência
+        timestamps: true,
+        underscored: true 
     });
 
     Attachment.associate = (models) => {
-        // 📁 Anexo pertence a uma única Transação
+        // 📁 Anexo pertence a uma única Transação (correto, pois tem a FK)
         Attachment.belongsTo(models.Transaction, {
             foreignKey: 'transaction_id',
             as: 'transaction'

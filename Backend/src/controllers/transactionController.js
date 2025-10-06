@@ -53,31 +53,31 @@ const addTransaction = async (req, res) => {
     }
 };
  
-// 💰 Implementação: Obter Saldo da Conta
+// 💰 Implementação: Obter Saldo da Conta (incluindo todas as transações)
 const getAccountBalance = async (req, res) => {
-    const user_id = req.user.id;
- 
-    try {
-        // Incluindo filtro 'is_paid' para calcular apenas transações efetivadas (melhor prática)
-        const transactions = await Transaction.findAll({
-            where: { user_id: user_id, is_paid: true },
-            attributes: ['type', 'amount'],
-        });
- 
-        let balance = 0;
-        transactions.forEach(t => {
-            if (t.type === 'RECEITA') {
-                balance += parseFloat(t.amount);
-            } else if (t.type === 'DESPESA') {
-                balance -= parseFloat(t.amount);
-            }
-        });
- 
-        res.status(200).json({ balance: balance.toFixed(2) });
-    } catch (error) {
-        console.error("Erro ao calcular saldo:", error);
-        res.status(500).send("Erro ao calcular saldo.");
-    }
+    const user_id = req.user.id;
+ 
+    try {
+        // Agora busca TODAS as transações, não apenas as pagas
+        const transactions = await Transaction.findAll({
+            where: { user_id: user_id },
+            attributes: ['type', 'amount'],
+        });
+ 
+        let balance = 0;
+        transactions.forEach(t => {
+            if (t.type === 'RECEITA') {
+                balance += parseFloat(t.amount);
+            } else if (t.type === 'DESPESA') {
+                balance -= parseFloat(t.amount);
+            }
+        });
+ 
+        res.status(200).json({ balance: balance.toFixed(2) });
+    } catch (error) {
+        console.error("Erro ao calcular saldo:", error);
+        res.status(500).send("Erro ao calcular saldo.");
+    }
 };
  
 // 💰 Implementação: Obter Todas as Transações do Usuário

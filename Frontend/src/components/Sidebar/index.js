@@ -1,19 +1,18 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SidebarContainer, ToggleButton, NavMenu, NavMenuItem, StyledLink, LogoutButton } from "./style";
-import { isAuthenticated, logout } from "../../services/auth";
+import { isAuthenticated } from "../../services/auth";
 import { useSidebar } from "../../contexts/SidebarContext";
 import { AiOutlineLeft } from "react-icons/ai";
  
 import {
   AiOutlineHome,
-  AiOutlineDashboard,
   AiOutlineLogout,
-  AiOutlineSwap, // 💰 Novo Ícone para Transações (Troca)
+  AiOutlineSwap, // Transações
   AiOutlineTags,
 } from "react-icons/ai";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { AiFillDollarCircle } from "react-icons/ai"; // 💰 Ícone para Balanço/Dashboard
+import { AiFillDollarCircle } from "react-icons/ai"; // Balanço
  
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
@@ -24,7 +23,6 @@ const Sidebar = () => {
   const authenticated = isAuthenticated();
  
   const handleLogout = () => {
-    // A navegação para /logout lida com a chamada à API e a limpeza local
     navigate("/logout");
   };
  
@@ -35,6 +33,7 @@ const Sidebar = () => {
 </ToggleButton>
 <NavMenu>
 <ul>
+          {/* 1. Link para "Início" (Visível sempre) */}
 <NavMenuItem $isActive={isActive("/")}>
 <StyledLink to="/" $isOpen={isSidebarOpen}>
 <AiOutlineHome size={20} />
@@ -42,6 +41,7 @@ const Sidebar = () => {
 </StyledLink>
 </NavMenuItem>
  
+          {/* 2. Opções visíveis SOMENTE PARA QUEM NÃO ESTÁ LOGADO */}
           {!authenticated ? (
 <>
 <NavMenuItem $isActive={isActive("/login")}>
@@ -58,17 +58,17 @@ const Sidebar = () => {
 </NavMenuItem>
 </>
           ) : (
+            /* 3. Opções visíveis SOMENTE PARA QUEM ESTÁ LOGADO */
 <>
 <NavMenuItem $isActive={isActive("/app")}>
 <StyledLink to="/app" $isOpen={isSidebarOpen}>
-<AiFillDollarCircle size={20} /> {/* Ícone atualizado */}
+<AiFillDollarCircle size={20} /> 
                   {isSidebarOpen && <span>Balanço</span>}
 </StyledLink>
 </NavMenuItem>
-              {/* ⚠️ REMOVIDO: Rota de Produtos */}
-<NavMenuItem $isActive={isActive("/transactions")}> {/* ROTA RENOMEADA */}
+<NavMenuItem $isActive={isActive("/transactions")}>
 <StyledLink to="/transactions" $isOpen={isSidebarOpen}>
-<AiOutlineSwap size={20} /> {/* Ícone atualizado */}
+<AiOutlineSwap size={20} /> 
                   {isSidebarOpen && <span>Transações</span>}
 </StyledLink>
 </NavMenuItem>
@@ -78,6 +78,7 @@ const Sidebar = () => {
                   {isSidebarOpen && <span>Categorias</span>}
 </StyledLink>
 </NavMenuItem>
+              {/* Botão de Logout */}
 <NavMenuItem>
 <LogoutButton onClick={handleLogout} $isOpen={isSidebarOpen}>
 <AiOutlineLogout size={20} />

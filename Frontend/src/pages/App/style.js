@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
+  background: linear-gradient(135deg, #F2EDE7 0%, #4F735C 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h2`
-  color: #333;
+  color: #2F2F2F;
   font-size: 2em;
   margin-bottom: 25px;
 `;

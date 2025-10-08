@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
+  background: linear-gradient(135deg,#F2EDE7 0%, #4d8f65 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -19,7 +19,7 @@ export const Title = styled.h1`
 
 export const PrimaryButton = styled.button`
   padding: 8px 18px;
-  background-color: #9fb981;
+  background-color: #4d8f65;
   color: white;
   border: none;
   border-radius: 8px;
@@ -35,7 +35,7 @@ export const PrimaryButton = styled.button`
   align-self: flex-start;
 
   &:hover {
-    background-color: #79896a;
+    background-color: #3a6b4c;
     transform: translateY(-2px);
   }
   &:active {

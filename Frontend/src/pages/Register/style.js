@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
+  background: linear-gradient(135deg,#F2EDE7 0%, #4d8f65 100%);
   padding: 2rem;
 `;
 
@@ -22,8 +22,7 @@ export const Title = styled.h2`
 export const Form = styled.form`
   width: 100%;
   max-width: 400px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(242, 237, 231, 0.65);
   padding: 60px 40px 30px;
   border-radius: 20px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
@@ -36,7 +35,7 @@ export const Form = styled.form`
 `;
 
 export const IconWrapper = styled.div`
-  background-color: #99BC85;
+  background-color: #4d8f65;
   border-radius: 50%;
   padding: 15px;
   position: absolute;
@@ -87,7 +86,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   color: #fff;
   font-size: 18px;
-  background: #99BC85;
+  background: #4d8f65;
   height: 55px;
   border: none;
   border-radius: 8px;
@@ -97,7 +96,7 @@ export const Button = styled.button`
   box-shadow: 0 5px 15px rgba(122, 146, 107, 0.4);
 
   &:hover {
-    background:rgb(120, 138, 110);
+    background:#3a6b4c;
     transform: translateY(-3px);
   }
   &:active {
@@ -115,12 +114,11 @@ export const Divider = styled.hr`
 
 export const StyledLink = styled(Link)`
   font-size: 15px;
-  color:rgb(142, 155, 145);
+  color:#49524b;
   text-decoration: none;
   margin-top: 5px;
   transition: color 0.2s;
   &:hover {
-    color:rgb(92, 100, 94);
-    text-decoration: underline;
+    color:#3a6b4c;
   }
 `;

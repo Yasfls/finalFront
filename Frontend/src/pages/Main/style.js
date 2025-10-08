@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 50px;
-  background: linear-gradient(135deg,rgb(225, 236, 219) 0%, #E4EFE7 100%);
+  background: linear-gradient(135deg,#F2EDE7 0%, #4d8f65 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
@@ -24,17 +24,17 @@ export const HomeContent = styled.div`
   max-width: 700px;
   margin: 0 auto;
   padding: 40px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(242, 237, 231, 0.65);
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
  
   h1 {
     font-size: 1.8em;
-    color: #49524b;
+    color: #141414;
     margin-bottom: 10px;
   }
   p {
-    color: #6c757d;
+    color: #2F2F2F;
     font-size: 1.1em;
     margin-bottom: 25px;
   }
@@ -64,7 +64,7 @@ export const StatGrid = styled.div`
 `;
  
 export const StatCard = styled.div`
-  background: #e1ecdb;
+  background: #F2EDE7;
   padding: 20px 10px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -91,18 +91,18 @@ export const StyledLink = styled(Link)`
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s ease;
   ${props => props.$isPrimary ? `
-    background-color: #99BC85;
+    background-color: #4d8f65;
     color: white;
     box-shadow: 0 4px 10px rgba(122, 146, 107, 0.4);
 &:hover {
-      background-color: rgb(120, 138, 110);
+      background-color: #3a6b4c;
       transform: translateY(-2px);
     }
   ` : `
     color: #49524b;
     margin-left: 10px;
 &:hover {
-      text-decoration: underline;
+      color: #3a6b4c;
     }
   `}
 `;

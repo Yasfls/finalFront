@@ -13,13 +13,14 @@ export const SidebarContainer = styled.div`
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
   overflow-x: hidden;
   padding-top: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 `;
 
 export const ToggleButton = styled.button`
   width: 40px;
   height: 40px;
   border: none;
-  background: #99bc85;
+  background: #4d8f65;
   color: white;
   position: fixed;
   left: ${(props) => (props.isOpen ? "180px" : "40px")};
@@ -34,7 +35,7 @@ export const ToggleButton = styled.button`
   transition: left 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: rgb(120, 138, 110);
+    background-color: #3a6b4c;
     transform: scale(1.1);
   }
 
@@ -57,13 +58,13 @@ export const NavMenu = styled.nav`
 export const NavMenuItem = styled.li`
   margin: 5px 0;
   background-color: ${(props) =>
-    props.$isActive ? "rgba(225, 236, 219)" : "transparent"};
+    props.$isActive ? "#4d8f65;" : "transparent"};
   border-left: ${(props) =>
-    props.$isActive ? "4px solid #99BC85" : "4px solid transparent"};
+    props.$isActive ? "4px solid #4d8f65;" : "4px solid transparent"};
   transition: background-color 0.3s ease, border-left 0.3s ease;
 
   &:hover {
-    background-color: rgba(255, 105, 180, 0.1);
+    background-color: #3a6b4c;
   }
 `;
 

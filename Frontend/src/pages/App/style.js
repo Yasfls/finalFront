@@ -5,11 +5,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background: linear-gradient(135deg, #F2EDE7 0%, #4F735C 100%);
+  background: linear-gradient(135deg,#F2EDE7 0%, #4d8f65 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
-  color: #333;
+  color: #2F2F2F;
 `;
 
 export const Title = styled.h2`
@@ -20,13 +20,12 @@ export const Title = styled.h2`
 
 export const StyledLink = styled(Link)`
   font-size: 14px;
-  color: rgb(142, 155, 145);
+  color: #2F2F2F;
   text-decoration: none;
   margin-top: 15px;
   transition: color 0.2s;
   &:hover {
     color: rgb(92, 100, 94);
-    text-decoration: underline;
   }
 `;
 
@@ -41,8 +40,7 @@ export const MetricsGrid = styled.div`
 `;
 
 export const MetricCard = styled.div`
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(242, 237, 231, 0.65);
   border-radius: 15px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(10px);

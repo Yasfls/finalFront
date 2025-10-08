@@ -1,3 +1,6 @@
+***ATLAS BANK***
+Programa Web que gerencia os ganhos e gastos de usuários
+
 1. Instale o Node.js na máquina.
 2. Rode o servidor MySQL no XAMPP.
 3. Rode o comando npm install.
@@ -9,3 +12,25 @@
 9. Crie no MySQL um banco de dados chamado atlasbank.
 10. Rode os arquivos do backend com o comando node server.js.
 11. Rode o frontend com o comando npm start.
+
++++++++++++++++++++
+
+O sistema possui proteções contra as seguinte vulnerabilidades:
+
+SQL Injection / Hardcoded SQL:
+Utilizando o Sequelize ORM
+
+Cross-Site Scripting (XSS):
+utilizando DOMPurify no React
+
+Session Hijacking:
+Com o uso do token de sessão (JWT) que é armazenado em um Cookie HttpOnly.
+
+Cross-Site Request Forgery (CSRF):
+Utilizando a política de cookies SameSite=Strict.
+
+Mass Assignment:
+Definindo um Whitelisting em todos os controllers.
+
+Segurança Adicional:
+Senhas são salvas usando Bcrypt.

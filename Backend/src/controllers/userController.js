@@ -11,21 +11,18 @@ const addUser = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    // 🔐 Mass Assignment Defense (Whitelisting): Apenas os campos permitidos são lidos
     let info = {
-      // id_user: req.body.id_user (REMOVIDO: Previne ID injection)
       name: req.body.name,
       password: hashedPassword,
       email: req.body.email,
     };
 
     const user = await User.create(info);
-    
-    // Não retornar a senha (mesmo que hashed)
+
     const { password: _, ...userInfo } = user.toJSON(); 
     res.status(201).send(userInfo);
     console.log(`Usuário adicionado: ${userInfo.name}`);
-  } catch (error) { // Captura e loga o erro corretamente
+  } catch (error) { 
     console.error("Erro ao adicionar usuário:", error.message);
     res.status(500).send("Erro ao adicionar usuário");
   }
@@ -34,7 +31,6 @@ const addUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     let users = await User.findAll({
-      // 🔐 Retorna apenas atributos seguros
       attributes: ["id_user", "name", "email", "createdAt", "updatedAt"], 
     });
     res.status(200).send(users);
@@ -47,7 +43,6 @@ const getAllUsers = async (req, res) => {
 const getSingleUser = async (req, res) => {
     const id = req.params.id;
 
-    // 🔐 Propriedade: Garante que o usuário só pode ver seus próprios dados
     if (req.user && req.user.id !== parseInt(id)) {
         return res.status(403).send({ message: "Acesso negado. Você só pode ver seu próprio perfil." });
     }
@@ -55,7 +50,6 @@ const getSingleUser = async (req, res) => {
   try {
       let user = await User.findOne({ 
           where: { id_user: id },
-          // 🔐 Retorna apenas atributos seguros
           attributes: ["id_user", "name", "email", "createdAt", "updatedAt"], 
       });
       
@@ -72,7 +66,6 @@ const getSingleUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const id = req.params.id;
     
-    // 🔐 Propriedade: Garante que o usuário só pode atualizar seus próprios dados
     if (req.user && req.user.id !== parseInt(id)) {
         return res.status(403).send({ message: "Acesso negado. Você só pode editar seu próprio perfil." });
     }
@@ -84,7 +77,6 @@ const updateUser = async (req, res) => {
             return res.status(404).send({ message: "Usuário não encontrado" });
         }
 
-        // 🔐 Mass Assignment Defense: Apenas os campos permitidos são lidos
         const { name, email, password } = req.body;
         const updatedData = {};
 
@@ -96,7 +88,6 @@ const updateUser = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, salt);
             updatedData.password = hashedPassword;
         }
-        // updateData é seguro contra Mass Assignment (whitelisting)
         await User.update(updatedData, { where: { id_user: id } });
 
         res.status(200).send({ message: `Usuário editado com sucesso: ${id}` });
@@ -110,8 +101,6 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const id = req.params.id;
-
-    // 🔐 Propriedade: Garante que o usuário só pode se deletar
     if (req.user && req.user.id !== parseInt(id)) {
         return res.status(403).send({ message: "Acesso negado. Você só pode deletar seu próprio perfil." });
     }
@@ -123,7 +112,6 @@ const deleteUser = async (req, res) => {
             return res.status(404).send("Usuário não encontrado.");
         }
         
-        // 🔐 Limpa o cookie após a exclusão da conta
         res.clearCookie('jwt'); 
         res.status(200).send(`Usuário deletado com sucesso: ${id}`);
     } catch (error) {
@@ -153,16 +141,13 @@ const loginUser = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
-
-    // 🔐 CRÍTICO: Enviar JWT via HttpOnly Cookie (Defesa contra Session Hijacking/XSS)
     res.cookie('jwt', accessToken, {
-        httpOnly: true, // Inacessível via JavaScript
-        secure: process.env.NODE_ENV === 'production', // Use HTTPS em produção
-        maxAge: 3600000, // 1 hora em milissegundos
-        sameSite: 'strict', // Defesa contra CSRF
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600000,
+        sameSite: 'strict',
     });
 
-    // Não retornar o token no corpo para forçar o uso do cookie
     res
       .status(200)
       .json({ message: "Usuário logado com sucesso" });
@@ -172,9 +157,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-// 🔐 NOVA FUNÇÃO: Logout (Limpa o cookie)
+
 const logoutUser = (req, res) => {
-    res.clearCookie('jwt'); // Limpa o HttpOnly cookie
+    res.clearCookie('jwt');
     res.status(200).json({ message: "Logout realizado com sucesso." });
 };
 
@@ -185,5 +170,5 @@ export default {
   updateUser,
   deleteUser,
   loginUser,
-  logoutUser, // Exporta a nova função de logout
+  logoutUser,
 };

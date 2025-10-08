@@ -35,7 +35,6 @@ const Transactions = () => {
   const loadTransactions = async () => {
     try {
       setError("");
-      // 💰 API para Transações do usuário logado
       const response = await api.get("/api/transactions/all");
       setTransactions(response.data);
     } catch (err) {
@@ -68,7 +67,6 @@ const Transactions = () => {
   };
   
   const handleDownloadAttachment = (filePath) => {
-    // 📁 Link para o arquivo (backend deve estar servindo a pasta /attachments)
     window.open(`http://localhost:3000/${filePath}`, '_blank'); 
   };
 
@@ -137,7 +135,6 @@ const Transactions = () => {
           onClose={() => setIsModalOpen(false)}
           transaction={currentTransaction}
           onTransactionSaved={loadTransactions}
-          // Passando componentes de estilo para o modal
           ModalOverlay={ModalOverlay}
           ModalContent={ModalContent}
           Input={Input}
@@ -158,7 +155,7 @@ const TransactionModal = ({ isOpen, onClose, transaction, onTransactionSaved, Mo
     description: transaction?.description || "",
     date: transaction?.date ? new Date(transaction.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
     category_id: transaction?.category_id || "",
-    attachment: null, // Novo campo para o arquivo
+    attachment: null,
   });
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
@@ -198,8 +195,7 @@ const TransactionModal = ({ isOpen, onClose, transaction, onTransactionSaved, Mo
       setError("Todos os campos de texto são obrigatórios.");
       return;
     }
-    
-    // Cria FormData para enviar arquivos
+
     const data = new FormData();
     data.append('type', type);
     data.append('amount', amount);
@@ -207,17 +203,15 @@ const TransactionModal = ({ isOpen, onClose, transaction, onTransactionSaved, Mo
     data.append('date', date);
     data.append('category_id', category_id);
     if (attachment) {
-        data.append('attachment', attachment); // Campo de arquivo
+        data.append('attachment', attachment);
     }
 
     try {
       if (transaction) {
-        // PUT para atualizar (enviando apenas os dados do corpo, sem novo anexo)
         const updateData = { type, amount, description, date, category_id };
 
         await api.put(`/api/transactions/${transaction.id_transaction}`, updateData);
       } else {
-        // POST para criar - Usa o FormData para suportar o anexo
         await api.post("/api/transactions/add", data, {
             headers: {
                 'Content-Type': 'multipart/form-data'

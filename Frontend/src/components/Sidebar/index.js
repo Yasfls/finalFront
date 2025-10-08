@@ -8,11 +8,11 @@ import { AiOutlineLeft } from "react-icons/ai";
 import {
   AiOutlineHome,
   AiOutlineLogout,
-  AiOutlineSwap, // Transações
+  AiOutlineSwap,
   AiOutlineTags,
 } from "react-icons/ai";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { AiFillDollarCircle } from "react-icons/ai"; // Balanço
+import { AiFillDollarCircle } from "react-icons/ai";
  
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useSidebar();

@@ -26,8 +26,7 @@ const LoginPage = () => <Login />
 const LogoutPage = () => <Logout />
 const NotFoundPage = () => <NotFound />
 const RegisterPage = () => <Register />
-// ⚠️ REMOVIDO: const ProductsPage = () => <Products />
-const TransactionsPage = () => <Transactions /> // RENOMEADO
+const TransactionsPage = () => <Transactions />
 const CategoriesPage = () => <Categories />
  
 const AppPage = () => {
@@ -48,8 +47,7 @@ const Rotas = () => (
 <Route path='/logout' element={<LogoutPage />} />
 <Route path='/app' element={<AppPage />} />
 <Route path='/register' element={<RegisterPage />} />
-          {/* ⚠️ REMOVIDO: <Route path='/products' element={<ProductsPage />} /> */}
-<Route path='/transactions' element={<TransactionsPage />} /> {/* ROTA RENOMEADA */}
+<Route path='/transactions' element={<TransactionsPage />} />
 <Route path='/categories' element={<CategoriesPage />} />
 <Route path='/*' element={<NotFoundPage />} />
 </Routes>

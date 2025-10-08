@@ -20,11 +20,9 @@ const App = ({ refreshKey = 0 }) => {
     setLoading(true);
     setError(null);
     try {
-      // 💰 Busca o saldo (agora considerando todas as transações)
       const balanceResponse = await api.get("/api/transactions/balance");
       setBalance(balanceResponse.data.balance);
  
-      // 💳 Busca o total de transações
       const transactionsResponse = await api.get("/api/transactions/all");
       setTotalTransactions(transactionsResponse.data.length);
  
@@ -40,7 +38,6 @@ const App = ({ refreshKey = 0 }) => {
     fetchMetrics();
   }, [refreshKey]);
  
-  // Define cor do saldo (verde = positivo, vermelho = negativo)
   const balanceColor = parseFloat(balance) >= 0 ? "#198754" : "#dc3545";
  
   return (

@@ -30,10 +30,9 @@ export default (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    // 💰 Alterado: Usuário tem muitas Transações (em vez de Pedidos)
     User.hasMany(models.Transaction, {
       foreignKey: 'user_id',
-      as: 'transactions' // Novo alias
+      as: 'transactions'
     });
   };
 

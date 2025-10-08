@@ -16,10 +16,9 @@ export default (sequelize, DataTypes) => {
   });
 
   Category.associate = (models) => {
-    // 💰 Alterado: Categoria tem muitas Transações (em vez de Produtos)
     Category.hasMany(models.Transaction, { 
       foreignKey: 'category_id',
-      as: 'transactions' // Novo alias
+      as: 'transactions'
     });
   };
 

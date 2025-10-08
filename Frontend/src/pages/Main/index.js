@@ -1,10 +1,8 @@
 import React from "react";
-// 🚨 Importar a função de autenticação
 import { isAuthenticated } from "../../services/auth"; 
 import { Container, Title, HomeContent, FeatureList, FeatureItem, StatGrid, StatCard, StatValue, StatLabel, StyledLink } from "./style";
  
 const Main = () => {
-  // 🚨 Verificar o status de autenticação
   const authenticated = isAuthenticated(); 
   const stats = [
     { value: '100%', label: 'Proteção Contra Ataques' },
@@ -24,8 +22,7 @@ const Main = () => {
 <FeatureItem>2. Anexe comprovantes digitais (PDF/Imagem) de forma segura.</FeatureItem>
 <FeatureItem>3. Mantenha seu histórico financeiro organizado por categorias.</FeatureItem>
 </FeatureList>
- 
-        {/* Estatísticas de Valor Fictícias */}
+
 <StatGrid>
           {stats.map((stat, index) => (
 <StatCard key={index}>
@@ -34,8 +31,7 @@ const Main = () => {
 </StatCard>
           ))}
 </StatGrid>
- 
-        {/* 🎯 LÓGICA DE VISIBILIDADE CORRIGIDA AQUI */}
+
         {!authenticated ? (
 <div style={{ marginTop: '30px' }}>
 <StyledLink to="/register" $isPrimary>Criar Conta Grátis</StyledLink>
